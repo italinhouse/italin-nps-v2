@@ -51,16 +51,20 @@
       <div class="store-badge" id="storeBadge">Carregando...</div>
       <h1>Como foi sua <em>experiência</em> com a Ital'in House?</h1>
       <p class="sub">Sua opinião nos ajuda a servir ainda melhor. Leva menos de 1 minuto! 🍝</p>
+      
       <div class="q-label">Qual nota você dá para sua experiência?</div>
       <input type="range" id="slider" min="0" max="10" value="8"/>
       <div class="slider-labels"><span>😞 Não recomendaria</span><span>😍 Recomendaria muito</span></div>
+      
       <div class="score-box">
         <div class="score-num" id="scoreNum">8</div>
         <span class="score-emoji" id="scoreEmoji">😄</span>
         <div class="score-lbl" id="scoreLbl">Ótimo</div>
       </div>
+
       <label class="lbl" for="comment">Conte mais sobre sua experiência com seu pedido</label>
       <textarea id="comment" placeholder="O que você mais gostou? Tem algo que podemos melhorar? (opcional)" maxlength="500"></textarea>
+      
       <button class="btn" id="submitBtn">Enviar Avaliação 🍝</button>
     </div>
   </main>
@@ -79,66 +83,86 @@
       appId: "1:968639332938:web:d47cda07386bbb645d9cb3"
     };
 
-    const db = getFirestore(initializeApp(FIREBASE_CONFIG));
-    const p  = new URLSearchParams(location.search);
-    const lojaId   = p.get("loja") || "";
-    const lojaNome = p.get("nome") || lojaId || "Loja";
+    const app = initializeApp(FIREBASE_CONFIG);
+    const db = getFirestore(app);
 
-    document.getElementById("storeBadge").textContent = lojaNome;
-    document.title = `Avalie a ${lojaNome} — Ital'in House`;
+    const p = new URLSearchParams(location.search);
+    const lojaId = p.get("loja"); // Pegando o parâmetro ?loja=XXX
+    const lojaNome = p.get("nome") || "Nossa Loja";
 
+    const card = document.getElementById("card");
+    const storeBadge = document.getElementById("storeBadge");
+
+    // 1. Verificação de Segurança do Link
     if (!lojaId) {
-      document.getElementById("card").innerHTML = '<div style="text-align:center;padding:20px"><p style="font-size:14px;color:var(--muted)">Link inválido. Solicite um novo link à loja.</p></div>';
-    }
+      card.innerHTML = `
+        <div style="text-align:center;padding:20px">
+          <span style="font-size:40px">⚠️</span>
+          <h2 style="margin-top:10px; font-family:'Playfair Display',serif">Link Inválido</h2>
+          <p style="font-size:14px;color:var(--muted);margin-top:10px">Por favor, utilize o link enviado pela loja para avaliar seu pedido.</p>
+        </div>`;
+    } else {
+      // O link é válido, então configuramos a página
+      storeBadge.textContent = lojaNome;
+      document.title = `Avalie a ${lojaNome} — Ital'in House`;
 
-    const EMOJIS = {0:["😭","Muito ruim"],1:["😖","Ruim"],2:["😞","Ruim"],3:["😕","Razoável"],4:["😐","Regular"],5:["🙂","Ok"],6:["😊","Bom"],7:["😊","Bom"],8:["😄","Ótimo"],9:["🤩","Excelente"],10:["😍","Perfeito!"]};
-    const slider = document.getElementById("slider");
-    const numEl  = document.getElementById("scoreNum");
-    const emoEl  = document.getElementById("scoreEmoji");
-    const lblEl  = document.getElementById("scoreLbl");
+      const EMOJIS = {
+        0:["😭","Muito ruim"],1:["😖","Ruim"],2:["😞","Ruim"],3:["😕","Razoável"],
+        4:["😐","Regular"],5:["🙂","Ok"],6:["😊","Bom"],7:["😊","Bom"],
+        8:["😄","Ótimo"],9:["🤩","Excelente"],10:["😍","Perfeito!"]
+      };
 
-    function update(v) {
-      numEl.textContent = v;
-      emoEl.textContent = EMOJIS[v][0];
-      lblEl.textContent = EMOJIS[v][1];
-      numEl.style.color = v<=3?"#C0392B":v<=6?"#F39C12":"#27AE60";
-    }
-    slider.addEventListener("input", ()=>update(+slider.value));
-    update(8);
+      const slider = document.getElementById("slider");
+      const numEl = document.getElementById("scoreNum");
+      const emoEl = document.getElementById("scoreEmoji");
+      const lblEl = document.getElementById("scoreLbl");
+      const submitBtn = document.getElementById("submitBtn");
 
-    document.getElementById("submitBtn").addEventListener("click", async () => {
-      if (!lojaId) return;
-      const btn = document.getElementById("submitBtn");
-      btn.disabled = true;
-      btn.textContent = "Enviando...";
-      try {
-        await addDoc(collection(db,"avaliacoes"), {
-          lojaId,
-          lojaNome,
-          score: +slider.value,
-          comment: document.getElementById("comment").value.trim() || null,
-          criadoEm: serverTimestamp()
-        });
-        document.getElementById("card").innerHTML = `
-          <div class="success">
-            <span class="success-icon">🫶</span>
-            <h2>Muito obrigado!</h2>
-            <p>Sua avaliação foi registrada com sucesso.<br>Ela é essencial para continuarmos entregando a melhor experiência italiana do Brasil!</p>
-            <div class="ok-tag">✓ Resposta enviada</div>
-            <div class="cupom-box">
-              <div class="cupom-title">🎁 Um presente especial para você!</div>
-              <div class="cupom-desc">Como forma de agradecimento, preparamos um presente para o seu próximo pedido:<br><strong>10% de desconto!</strong> Use o cupom abaixo no AnotaAi e aproveite uma deliciosa massa 🍝</div>
-              <div class="cupom-code">OBRIGADOIH</div>
-              <div class="cupom-sub">*Válido no seu próximo pedido pelo AnotaAi ou através do nosso APP</div>
-            </div>
-          </div>`;
-      } catch(e) {
-        console.error(e);
-        btn.disabled = false;
-        btn.textContent = "Enviar Avaliação 🍝";
-        alert("Erro ao enviar. Tente novamente.");
+      function update(v) {
+        numEl.textContent = v;
+        emoEl.textContent = EMOJIS[v][0];
+        lblEl.textContent = EMOJIS[v][1];
+        numEl.style.color = v <= 3 ? "#C0392B" : v <= 6 ? "#F39C12" : "#27AE60";
       }
-    });
+
+      slider.addEventListener("input", () => update(+slider.value));
+      update(8); // Inicia com nota 8
+
+      // 2. Envio para o Firebase
+      submitBtn.addEventListener("click", async () => {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Enviando...";
+
+        try {
+          await addDoc(collection(db, "avaliacoes"), {
+            lojaId: lojaId,
+            lojaNome: lojaNome,
+            score: +slider.value,
+            comment: document.getElementById("comment").value.trim() || null,
+            criadoEm: serverTimestamp()
+          });
+
+          card.innerHTML = `
+            <div class="success">
+              <span class="success-icon">🫶</span>
+              <h2>Muito obrigado!</h2>
+              <p>Sua avaliação foi registrada com sucesso.<br>Ela nos ajuda a entregar a melhor experiência italiana do Brasil!</p>
+              <div class="ok-tag">✓ Resposta enviada</div>
+              <div class="cupom-box">
+                <div class="cupom-title">🎁 Um presente especial para você!</div>
+                <div class="cupom-desc">Use o cupom abaixo no seu próximo pedido e ganhe <strong>10% de desconto!</strong></div>
+                <div class="cupom-code">OBRIGADOIH</div>
+                <div class="cupom-sub">*Válido para pedidos via APP ou AnotaAi</div>
+              </div>
+            </div>`;
+        } catch(e) {
+          console.error("Erro ao salvar:", e);
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Enviar Avaliação 🍝";
+          alert("Erro de conexão. Verifique sua internet e tente novamente.");
+        }
+      });
+    }
   </script>
 </body>
 </html>
