@@ -72,6 +72,9 @@
     .act-btn{padding:8px 15px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;white-space:nowrap}
     .act-btn:hover{opacity:.82}
     .act-btn.r{background:var(--red2)}
+    
+    /* NOVO: Botão de exclusão em massa */
+    .btn-delete-bulk { background: #e74c3c !important; display: none; }
 
     /* TABLE */
     .twrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
@@ -92,48 +95,17 @@
     .loading{text-align:center;padding:44px 20px;color:var(--muted);font-size:14px}
     .sb{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:#F5EDE3;color:var(--muted)}
 
+    /* Checkbox Style */
+    .chk-col { width: 40px; text-align: center; }
+    input[type="checkbox"] { cursor: pointer; transform: scale(1.1); }
+
     /* LINKS */
     .cpbtn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#FDF6EE;border:1px solid var(--border);border-radius:6px;font-size:11px;font-weight:500;color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap}
     .cpbtn:hover,.cpbtn.ok{background:var(--green);color:#fff;border-color:var(--green)}
     .wabtn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#25D366;border:1px solid #25D366;border-radius:6px;font-size:11px;font-weight:500;color:#fff;cursor:pointer;text-decoration:none;transition:opacity .15s;white-space:nowrap}
     .wabtn:hover{opacity:.84}
     .lnk{font-size:11px;color:#1155CC;font-family:monospace;max-width:270px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
-    .nmini{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
-    .nmini.g{background:#EAFAF1;color:#1E7A40}.nmini.w{background:#FEF9E7;color:#7D6608}.nmini.n{background:#F5EDE3;color:var(--muted)}
-
-    /* RANKING */
-    .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    .rsec h3{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-    .rcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
-    .rpos{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;min-width:36px;text-align:center;color:var(--muted)}
-    .rpos.gold{color:#C9A84C}.rpos.silver{color:#9E9E9E}.rpos.bronze{color:#A0522D}.rpos.danger{color:var(--red)}
-    .rbar{height:5px;background:#F2E8DF;border-radius:4px;margin-top:5px;overflow:hidden}
-    .rbar-fill{height:100%;border-radius:4px}
-
-    /* USUARIOS */
-    .uform{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:18px}
-    .uform h3{font-size:14px;font-weight:600;margin-bottom:16px}
-    .ufield{margin-bottom:12px}
-    .ufield label{font-size:12px;font-weight:500;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-    .uinput{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#FDFAF7;outline:none;transition:border-color .2s}
-    .uinput:focus{border-color:var(--red)}
-    .uinput.ok{border-color:var(--green)}.uinput.err{border-color:var(--red)}
-    .uinput-wrap{position:relative}
-    .uinput-wrap .uinput{padding-right:44px}
-    .ueye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:4px;line-height:1}
-    .umsg{font-size:11px;margin-top:4px}
-    .alert-err{display:none;background:#FDEDEC;border:1px solid #F5C6C0;color:#922B21;font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:10px}
-    .alert-ok{display:none;background:#EAFAF1;border:1px solid #A3D9B5;color:#1E7A40;font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:10px}
-    .ubtn{padding:11px 18px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;width:100%;margin-top:4px}
-    .ubtn:hover{opacity:.88}
-    .ulist{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px}
-    .ulist h3{font-size:14px;font-weight:600;margin-bottom:14px}
-    .urow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F2E8DF}
-    .urow:last-child{border-bottom:none}
-    .utag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block}
-    .delbtn{background:none;border:1px solid #F5C6C0;color:#922B21;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
-    .delbtn:hover{background:#FDEDEC}
-
+    
     @media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.rgrid{grid-template-columns:1fr}}
     @media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.content{padding:12px}}
   </style>
@@ -164,110 +136,4 @@
       <span>Painel NPS</span>
       <span class="badge">ADMIN</span>
     </div>
-    <button class="outbtn" id="outBtn">Sair</button>
-  </nav>
-  <div class="content">
-    <div class="tabs">
-      <div class="tab active" data-tab="aval">📋 Avaliações</div>
-      <div class="tab" data-tab="rank">🏆 Ranking</div>
-      <div class="tab" data-tab="lojas">📊 Por Loja</div>
-      <div class="tab" data-tab="links">🔗 Links (68)</div>
-      <div class="tab" data-tab="users">👥 Usuários</div>
-    </div>
-
-    <!-- AVALIAÇÕES -->
-    <div id="tabAval">
-      <div class="kpis">
-        <div class="kpi"><div class="kpi-lbl">Total</div><div class="kpi-val" id="kTotal">—</div></div>
-        <div class="kpi"><div class="kpi-lbl">NPS Geral</div><div class="kpi-val r" id="kNPS">—</div><div class="kpi-sub">% prom − % detr</div></div>
-        <div class="kpi"><div class="kpi-lbl">Média</div><div class="kpi-val g" id="kMedia">—</div><div class="kpi-sub">de 0 a 10</div></div>
-        <div class="kpi"><div class="kpi-lbl">Hoje</div><div class="kpi-val" id="kHoje">—</div><div class="kpi-sub">últimas 24h</div></div>
-        <div class="kpi"><div class="kpi-lbl">Lojas ativas</div><div class="kpi-val" id="kLojas">—</div></div>
-      </div>
-      <div class="nps-bar-wrap">
-        <h3>Distribuição NPS</h3>
-        <div class="nps-bar">
-          <div class="ns d" id="segD" style="flex:33">Det.</div>
-          <div class="ns p" id="segP" style="flex:33">Pas.</div>
-          <div class="ns pr" id="segPr" style="flex:34">Pro.</div>
-        </div>
-        <div class="nps-lgd">
-          <span><span class="dot" style="background:var(--red)"></span>Detratores 0–6</span>
-          <span><span class="dot" style="background:var(--yellow)"></span>Passivos 7–8</span>
-          <span><span class="dot" style="background:var(--green)"></span>Promotores 9–10</span>
-        </div>
-      </div>
-      <div class="filters">
-        <div class="acwrap">
-          <input class="fi" type="text" id="fLoja" placeholder="🔍 Buscar loja..." autocomplete="off"/>
-          <div class="acdrop" id="acDrop"></div>
-        </div>
-        <select class="fi" id="fNPS">
-          <option value="">Todos os perfis</option>
-          <option value="p">Promotores (9–10)</option>
-          <option value="n">Passivos (7–8)</option>
-          <option value="d">Detratores (0–6)</option>
-        </select>
-        <select class="fi" id="fPer">
-          <option value="">Todo período</option>
-          <option value="7">7 dias</option>
-          <option value="30">30 dias</option>
-          <option value="90">90 dias</option>
-        </select>
-        <button class="act-btn" id="btnCSV">⬇ CSV</button>
-        <button class="act-btn r" id="btnPDF">🖨 PDF</button>
-      </div>
-      <div class="twrap">
-        <div class="loading" id="tLoading">Carregando avaliações...</div>
-        <table id="avalTable" style="display:none">
-          <thead><tr>
-            <th data-col="criadoEm">Data ↕</th>
-            <th data-col="lojaNome">Loja ↕</th>
-            <th data-col="score">Nota ↕</th>
-            <th>Perfil</th><th>Classificação</th><th>Comentário</th>
-          </tr></thead>
-          <tbody id="tBody"></tbody>
-        </table>
-        <div class="empty" id="tEmpty" style="display:none">Nenhuma avaliação encontrada.</div>
-      </div>
-    </div>
-
-    <!-- RANKING -->
-    <div id="tabRank" style="display:none">
-      <div class="rgrid" id="rankWrap"><div class="loading">Carregando...</div></div>
-    </div>
-
-    <!-- POR LOJA -->
-    <div id="tabLojas" style="display:none">
-      <div class="filters">
-        <input class="fi" type="text" id="fLT" placeholder="🔍 Buscar loja..." style="flex:1;min-width:170px"/>
-        <select class="fi" id="fUF"><option value="">Todos UF</option></select>
-        <select class="fi" id="fNT"><option value="">Todos NPS</option><option value="bom">Bom ≥50</option><option value="med">Médio 0–49</option><option value="ruim">Negativo</option><option value="sem">Sem avaliações</option></select>
-        <span id="lCount" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
-      </div>
-      <div class="twrap">
-        <div class="loading" id="lLoading">Calculando...</div>
-        <table id="lTable" style="display:none">
-          <thead><tr><th>Loja</th><th>UF</th><th>Avals.</th><th>Média</th><th>NPS</th><th>Prom.</th><th>Pass.</th><th>Detr.</th></tr></thead>
-          <tbody id="lBody"></tbody>
-        </table>
-        <div class="empty" id="lEmpty" style="display:none">Nenhuma loja encontrada.</div>
-      </div>
-    </div>
-
-    <!-- LINKS -->
-    <div id="tabLinks" style="display:none">
-      <div class="filters">
-        <input class="fi" type="text" id="fLink" placeholder="🔍 Buscar loja..." style="flex:1;min-width:190px"/>
-        <select class="fi" id="fEst"><option value="">Todos estados</option></select>
-        <button class="act-btn" id="btnCopyAll">📋 Copiar todos</button>
-        <button class="act-btn" id="btnLinksCSV">⬇ CSV</button>
-        <span id="linkCount" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
-      </div>
-      <div class="twrap">
-        <table id="linksTable">
-          <thead><tr><th>#</th><th>Loja</th><th>UF</th><th>ID</th><th>Link NPS</th><th>Desempenho</th><th>Ações</th></tr></thead>
-          <tbody id="linksBody"></tbody>
-        </table>
-      </div>
-    </div>
+    <button class="outbtn" id="outBtn">Sair
