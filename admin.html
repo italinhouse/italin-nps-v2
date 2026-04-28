@@ -48,7 +48,7 @@
     
     /* FILTERS & BULK */
     .filters{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-    .fi{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);outline:none}
+    .fi{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);outline:none; width: 250px;}
     .act-btn{padding:8px 15px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer}
     .btn-delete-bulk { background: #e74c3c !important; display: none; }
 
@@ -61,6 +61,7 @@
     .chk-col { width: 40px; text-align: center; }
     .cpbtn{padding:4px 8px; background:#f0f0f0; border:1px solid #ccc; cursor:pointer; border-radius:4px; font-size:11px;}
     .cpbtn:hover{background:#e0e0e0}
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -93,6 +94,7 @@
     <div id="tabAval" class="tab-content">
       <div class="kpis">
         <div class="kpi"><div class="kpi-lbl">Total</div><div class="kpi-val" id="kTotal">0</div></div>
+        <div class="kpi"><div class="kpi-lbl">NPS</div><div class="kpi-val" id="kNPS">0</div></div>
       </div>
       <div class="filters">
         <button class="act-btn btn-delete-bulk" id="btnDeleteBulk">🗑 Excluir Selecionados (<span id="selCount">0</span>)</button>
@@ -105,19 +107,21 @@
               <th>Data</th><th>Loja</th><th>Nota</th><th>Perfil</th><th>Comentário</th>
             </tr>
           </thead>
-          <tbody id="tBody"></tbody>
+          <tbody id="tBody">
+             <tr><td colspan="6" style="text-align:center; padding:20px">Nenhuma avaliação carregada.</td></tr>
+          </tbody>
         </table>
       </div>
     </div>
 
     <div id="tabLinks" class="tab-content" style="display:none">
       <div class="filters">
-        <input class="fi" type="text" id="filterLinks" placeholder="🔍 Filtrar loja..." onkeyup="filterLinksTable()">
+        <input class="fi" type="text" id="filterLinks" placeholder="🔍 Filtrar por nome ou ID..." onkeyup="filterLinksTable()">
       </div>
       <div class="twrap">
         <table>
           <thead>
-            <tr><th>Loja</th><th>UF</th><th>ID</th><th>Link de Avaliação</th><th>Ação</th></tr>
+            <tr><th>Nome da Loja</th><th>UF</th><th>ID</th><th>Link Direto</th><th>Ação</th></tr>
           </thead>
           <tbody id="linksBody"></tbody>
         </table>
@@ -125,113 +129,117 @@
     </div>
 
     <div id="tabRank" class="tab-content" style="display:none">
-        <div class="twrap"><div style="padding:20px">Área do Ranking em desenvolvimento...</div></div>
+        <div class="twrap"><div style="padding:40px; text-align:center; color:#777">O Ranking será processado com base nos dados do Firebase.</div></div>
     </div>
 
   </div>
 </div>
 
 <script>
-  // --- BANCO DE DADOS DE LOJAS (68 LOJAS) ---
+  // --- LISTA DAS 68 LOJAS ---
   const LOJAS = [
-    {id:"GO001",nome:"Ital'in House - Goiânia - Jardim América",uf:"GO"},
-    {id:"SP002",nome:"Ital'in House - Ribeirão Pires - Centro",uf:"SP"},
-    {id:"SP003",nome:"Ital'in House - Santo André - Parque Marajoara",uf:"SP"},
-    {id:"SP004",nome:"Ital'in House - Guarujá - Pitangueiras",uf:"SP"},
-    {id:"RJ005",nome:"Ital'in House - Rio de Janeiro - Barra da Tijuca",uf:"RJ"},
-    {id:"SP006",nome:"Ital'in House - São Paulo - Campo Limpo",uf:"SP"},
-    {id:"SP007",nome:"Ital'in House - Barretos - Aeroporto",uf:"SP"},
-    {id:"MS008",nome:"Ital'in House - Dourados - Jardim Caramuru",uf:"MS"},
-    {id:"MT009",nome:"Ital'in House - Rondonópolis - Coophalis",uf:"MT"},
-    {id:"MG010",nome:"Ital'in House - Uberlândia - Saraiva",uf:"MG"},
-    {id:"SP011",nome:"Ital'in House - São Paulo - São Mateus",uf:"SP"},
-    {id:"PR012",nome:"Ital'in House - Ponta Grossa - Centro",uf:"PR"},
-    {id:"MS013",nome:"Ital'in House - Campo Grande - Jardim dos Estados",uf:"MS"},
-    {id:"MG014",nome:"Ital'in House - Governador Valadares - Centro",uf:"MG"},
-    {id:"SP015",nome:"Ital'in House - São José dos Campos - Bosque dos Eucaliptos",uf:"SP"},
-    {id:"SP016",nome:"Ital'in House - Piracicaba - Cidade Alta",uf:"SP"},
-    {id:"SP017",nome:"Ital'in House - Olímpia - Patrimônio de São João Batista",uf:"SP"},
-    {id:"SP018",nome:"Ital'in House - São Paulo - Vila Matilde",uf:"SP"},
-    {id:"SP019",nome:"Ital'in House - São Paulo - Jabaquara",uf:"SP"},
-    {id:"MT020",nome:"Ital'in House - Cuiabá - Areão",uf:"MT"},
-    {id:"SP021",nome:"Ital'in House - Barueri - Alphaville",uf:"SP"},
-    {id:"SP022",nome:"Ital'in House - Mogi das Cruzes - Centro",uf:"SP"},
-    {id:"SP023",nome:"Ital'in House - São Paulo - São Miguel",uf:"SP"},
-    {id:"SP024",nome:"Ital'in House - Jacareí - Loteamento Villa Branca",uf:"SP"},
-    {id:"PR025",nome:"Ital'in House - Araucária - Centro",uf:"PR"},
-    {id:"DF026",nome:"Ital'in House - Brasília - Setor Sudoeste",uf:"DF"},
-    {id:"SP027",nome:"Ital'in House - Taubaté - Centro",uf:"SP"},
-    {id:"MG028",nome:"Ital'in House - Ituiutaba - Centro",uf:"MG"},
-    {id:"ES029",nome:"Ital'in House - Vitória - ES",uf:"ES"},
-    {id:"SP030",nome:"Ital'in House - São Paulo - Vila Madalena",uf:"SP"},
-    {id:"SP031",nome:"Ital'in House - Carapicuíba",uf:"SP"},
-    {id:"SP032",nome:"Ital'in House - São Paulo - Taboão da Serra",uf:"SP"},
-    {id:"SP033",nome:"Ital'in House - Araçatuba - Higienópolis",uf:"SP"},
-    {id:"SP034",nome:"Italin House Macarrão Gourmet - Pindamonhangaba",uf:"SP"},
-    {id:"SP035",nome:"Ital'in House - Limeira - SP",uf:"SP"},
-    {id:"SP036",nome:"Ital'in House - Itapevi - Jardim Santa Rita",uf:"SP"},
-    {id:"SC037",nome:"Ital'in House - Joinville - Santo Antônio",uf:"SC"},
-    {id:"MT038",nome:"Ital'in House - Sinop - Setor Residencial Norte",uf:"MT"},
-    {id:"RS039",nome:"Ital'in House - Canoas",uf:"RS"},
-    {id:"SP040",nome:"Ital'in House - Votuporanga - Santa Eliza",uf:"SP"},
-    {id:"SP041",nome:"Ital'in House - Birigui",uf:"SP"},
-    {id:"SP042",nome:"Ital'in House - São Paulo - Rio Claro",uf:"SP"},
-    {id:"AL043",nome:"Ital'in House - Maceió - Pajuçara",uf:"AL"},
-    {id:"PI044",nome:"Ital'in House - Teresina - Ininga",uf:"PI"},
-    {id:"SP045",nome:"Ital'in House - São Bernardo do Campo - Rudge Ramos",uf:"SP"},
-    {id:"SP046",nome:"Ital'in House - Praia Grande",uf:"SP"},
-    {id:"MG047",nome:"Ital'in House - Betim - Inga Alto",uf:"MG"},
-    {id:"RS048",nome:"Ital'in House - Esteio - Centro",uf:"RS"},
-    {id:"SP049",nome:"Ital'in House - São Paulo - Freguesia do Ó",uf:"SP"},
-    {id:"SP050",nome:"Ital'in House - Botucatu - Centro",uf:"SP"},
-    {id:"SP051",nome:"Ital'in House - São Paulo - Vila Mariana",uf:"SP"},
-    {id:"SP052",nome:"Ital'in House - Osasco - Baronesa",uf:"SP"},
-    {id:"SP053",nome:"Ital'in House - Itupeva - Lagoa",uf:"SP"},
-    {id:"SP054",nome:"Ital'in House - São Vicente - Centro",uf:"SP"},
-    {id:"PI055",nome:"Ital'in House - Parnaíba",uf:"PI"},
-    {id:"MG056",nome:"Italin House BH - Buritis",uf:"MG"},
-    {id:"SC057",nome:"Ital'in House - Itajaí - Centro",uf:"SC"},
-    {id:"SP058",nome:"Ital'in House - São Paulo - Anália Franco",uf:"SP"},
-    {id:"SP059",nome:"Ital'in House - Matão - Centro",uf:"SP"},
-    {id:"SP060",nome:"Ital'in House - Fernandópolis - Centro",uf:"SP"},
-    {id:"SP061",nome:"Ital'in House - São Paulo - Mooca",uf:"SP"},
-    {id:"SP062",nome:"Ital'in House - São José do Rio Preto",uf:"SP"},
-    {id:"SP063",nome:"Italin House - Araras",uf:"SP"},
-    {id:"MG064",nome:"Ital'in House - Araxá - Centro",uf:"MG"},
-    {id:"SP065",nome:"Ital'in House - Andradina - Centro",uf:"SP"},
-    {id:"SP066",nome:"Ital'in House - Jundiaí - Jardim São Miguel",uf:"SP"},
-    {id:"RJ067",nome:"Ital'in House - Rio de Janeiro - Copacabana",uf:"RJ"},
-    {id:"SP068",nome:"Ital'in House - Leme - Centro",uf:"SP"}
+      {id:"GO001",nome:"Ital'in House - Goiânia - Jardim América",uf:"GO"},
+      {id:"SP002",nome:"Ital'in House - Ribeirão Pires - Centro",uf:"SP"},
+      {id:"SP003",nome:"Ital'in House - Santo André - Parque Marajoara",uf:"SP"},
+      {id:"SP004",nome:"Ital'in House - Guarujá - Pitangueiras",uf:"SP"},
+      {id:"RJ005",nome:"Ital'in House - Rio de Janeiro - Barra da Tijuca",uf:"RJ"},
+      {id:"SP006",nome:"Ital'in House - São Paulo - Campo Limpo",uf:"SP"},
+      {id:"SP007",nome:"Ital'in House - Barretos - Aeroporto",uf:"SP"},
+      {id:"MS008",nome:"Ital'in House - Dourados - Jardim Caramuru",uf:"MS"},
+      {id:"MT009",nome:"Ital'in House - Rondonópolis - Coophalis",uf:"MT"},
+      {id:"MG010",nome:"Ital'in House - Uberlândia - Saraiva",uf:"MG"},
+      {id:"SP011",nome:"Ital'in House - São Paulo - São Mateus",uf:"SP"},
+      {id:"PR012",nome:"Ital'in House - Ponta Grossa - Centro",uf:"PR"},
+      {id:"MS013",nome:"Ital'in House - Campo Grande - Jardim dos Estados",uf:"MS"},
+      {id:"MG014",nome:"Ital'in House - Governador Valadares - Centro",uf:"MG"},
+      {id:"SP015",nome:"Ital'in House - São José dos Campos - Bosque dos Eucaliptos",uf:"SP"},
+      {id:"SP016",nome:"Ital'in House - Piracicaba - Cidade Alta",uf:"SP"},
+      {id:"SP017",nome:"Ital'in House - Olímpia - Patrimônio de São João Batista",uf:"SP"},
+      {id:"SP018",nome:"Ital'in House - São Paulo - Vila Matilde",uf:"SP"},
+      {id:"SP019",nome:"Ital'in House - São Paulo - Jabaquara",uf:"SP"},
+      {id:"MT020",nome:"Ital'in House - Cuiabá - Areão",uf:"MT"},
+      {id:"SP021",nome:"Ital'in House - Barueri - Alphaville",uf:"SP"},
+      {id:"SP022",nome:"Ital'in House - Mogi das Cruzes - Centro",uf:"SP"},
+      {id:"SP023",nome:"Ital'in House - São Paulo - São Miguel",uf:"SP"},
+      {id:"SP024",nome:"Ital'in House - Jacareí - Loteamento Villa Branca",uf:"SP"},
+      {id:"PR025",nome:"Ital'in House - Araucária - Centro",uf:"PR"},
+      {id:"DF026",nome:"Ital'in House - Brasília - Setor Sudoeste",uf:"DF"},
+      {id:"SP027",nome:"Ital'in House - Taubaté - Centro",uf:"SP"},
+      {id:"MG028",nome:"Ital'in House - Ituiutaba - Centro",uf:"MG"},
+      {id:"ES029",nome:"Ital'in House - Vitória - ES",uf:"ES"},
+      {id:"SP030",nome:"Ital'in House - São Paulo - Vila Madalena",uf:"SP"},
+      {id:"SP031",nome:"Ital'in House - Carapicuíba",uf:"SP"},
+      {id:"SP032",nome:"Ital'in House - São Paulo - Taboão da Serra",uf:"SP"},
+      {id:"SP033",nome:"Ital'in House - Araçatuba - Higienópolis",uf:"SP"},
+      {id:"SP034",nome:"Italin House Macarrão Gourmet - Pindamonhangaba",uf:"SP"},
+      {id:"SP035",nome:"Ital'in House - Limeira - SP",uf:"SP"},
+      {id:"SP036",nome:"Ital'in House - Itapevi - Jardim Santa Rita",uf:"SP"},
+      {id:"SC037",nome:"Ital'in House - Joinville - Santo Antônio",uf:"SC"},
+      {id:"MT038",nome:"Ital'in House - Sinop - Setor Residencial Norte",uf:"MT"},
+      {id:"RS039",nome:"Ital'in House - Canoas",uf:"RS"},
+      {id:"SP040",nome:"Ital'in House - Votuporanga - Santa Eliza",uf:"SP"},
+      {id:"SP041",nome:"Ital'in House - Birigui",uf:"SP"},
+      {id:"SP042",nome:"Ital'in House - São Paulo - Rio Claro",uf:"SP"},
+      {id:"AL043",nome:"Ital'in House - Maceió - Pajuçara",uf:"AL"},
+      {id:"PI044",nome:"Ital'in House - Teresina - Ininga",uf:"PI"},
+      {id:"SP045",nome:"Ital'in House - São Bernardo do Campo - Rudge Ramos",uf:"SP"},
+      {id:"SP046",nome:"Ital'in House - Praia Grande",uf:"SP"},
+      {id:"MG047",nome:"Ital'in House - Betim - Inga Alto",uf:"MG"},
+      {id:"RS048",nome:"Ital'in House - Esteio - Centro",uf:"RS"},
+      {id:"SP049",nome:"Ital'in House - São Paulo - Freguesia do Ó",uf:"SP"},
+      {id:"SP050",nome:"Ital'in House - Botucatu - Centro",uf:"SP"},
+      {id:"SP051",nome:"Ital'in House - São Paulo - Vila Mariana",uf:"SP"},
+      {id:"SP052",nome:"Ital'in House - Osasco - Baronesa",uf:"SP"},
+      {id:"SP053",nome:"Ital'in House - Itupeva - Lagoa",uf:"SP"},
+      {id:"SP054",nome:"Ital'in House - São Vicente - Centro",uf:"SP"},
+      {id:"PI055",nome:"Ital'in House - Parnaíba",uf:"PI"},
+      {id:"MG056",nome:"Italin House BH - Buritis",uf:"MG"},
+      {id:"SC057",nome:"Ital'in House - Itajaí - Centro",uf:"SC"},
+      {id:"SP058",nome:"Ital'in House - São Paulo - Anália Franco",uf:"SP"},
+      {id:"SP059",nome:"Ital'in House - Matão - Centro",uf:"SP"},
+      {id:"SP060",nome:"Ital'in House - Fernandópolis - Centro",uf:"SP"},
+      {id:"SP061",nome:"Ital'in House - São Paulo - Mooca",uf:"SP"},
+      {id:"SP062",nome:"Ital'in House - São José do Rio Preto",uf:"SP"},
+      {id:"SP063",nome:"Italin House - Araras",uf:"SP"},
+      {id:"MG064",nome:"Ital'in House - Araxá - Centro",uf:"MG"},
+      {id:"SP065",nome:"Ital'in House - Andradina - Centro",uf:"SP"},
+      {id:"SP066",nome:"Ital'in House - Jundiaí - Jardim São Miguel",uf:"SP"},
+      {id:"RJ067",nome:"Ital'in House - Rio de Janeiro - Copacabana",uf:"RJ"},
+      {id:"SP068",nome:"Ital'in House - Leme - Centro",uf:"SP"}
   ];
 
-  // --- LÓGICA DE LOGIN ---
+  // --- CONTROLE DE LOGIN ---
   document.getElementById('loginBtn').onclick = () => {
     const email = document.getElementById('lEmail').value;
     const pass = document.getElementById('lPass').value;
-    if(email.length > 3 && pass.length > 3) {
+    if(email.length > 2 && pass.length > 2) {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('dashboard').style.display = 'block';
-      renderLinks(); // Gera os links assim que entra
+      renderLinks(); // Garante que os links carreguem
     } else {
       document.getElementById('lErr').style.display = 'block';
     }
   };
 
-  // --- LÓGICA DE TROCA DE ABAS (CORRIGIDO) ---
+  // --- LOGICA DE TROCA DE ABAS ---
   document.querySelectorAll('.tab').forEach(tab => {
     tab.onclick = function() {
-      // Remove active de todos
+      // 1. Resetar botões
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-      
-      // Adiciona active no clicado
       this.classList.add('active');
-      const target = this.getAttribute('data-target');
-      document.getElementById(target).style.display = 'block';
+
+      // 2. Esconder todos os conteúdos
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.style.display = 'none';
+      });
+
+      // 3. Mostrar o conteúdo alvo
+      const targetId = this.getAttribute('data-target');
+      document.getElementById(targetId).style.display = 'block';
     }
   });
 
-  // --- RENDERIZAR TABELA DE LINKS ---
+  // --- GERAR TABELA DE LINKS ---
   function renderLinks() {
     const body = document.getElementById('linksBody');
     body.innerHTML = '';
@@ -242,16 +250,16 @@
         <td>${loja.nome}</td>
         <td>${loja.uf}</td>
         <td><code>${loja.id}</code></td>
-        <td><a href="${link}" target="_blank" style="color:blue; font-size:11px">${link}</a></td>
-        <td><button class="cpbtn" onclick="copyLink('${link}')">Copiar</button></td>
+        <td><a href="${link}" target="_blank" style="color:blue">${link}</a></td>
+        <td><button class="cpbtn" onclick="copyText('${link}')">Copiar</button></td>
       `;
       body.appendChild(tr);
     });
   }
 
-  function copyLink(text) {
+  function copyText(text) {
     navigator.clipboard.writeText(text);
-    alert('Link copiado!');
+    alert('Link copiado com sucesso!');
   }
 
   function filterLinksTable() {
@@ -261,6 +269,37 @@
       row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
     });
   }
+
+  // --- LOGICA DE EXCLUSÃO (INTERFACE) ---
+  const selectAll = document.getElementById('selectAll');
+  const btnDeleteBulk = document.getElementById('btnDeleteBulk');
+  const selCountText = document.getElementById('selCount');
+
+  function updateBulkUI() {
+    const total = document.querySelectorAll('.row-chk:checked').length;
+    btnDeleteBulk.style.display = total > 0 ? 'inline-block' : 'none';
+    selCountText.textContent = total;
+  }
+
+  if(selectAll) {
+    selectAll.onchange = (e) => {
+        document.querySelectorAll('.row-chk').forEach(c => c.checked = e.target.checked);
+        updateBulkUI();
+    };
+  }
+
+  document.getElementById('tBody').onchange = (e) => {
+    if(e.target.classList.contains('row-chk')) updateBulkUI();
+  };
+
+  btnDeleteBulk.onclick = () => {
+    const selecionados = document.querySelectorAll('.row-chk:checked');
+    if(confirm(`Deseja remover ${selecionados.length} itens selecionados?`)) {
+      selecionados.forEach(s => s.closest('tr').remove());
+      updateBulkUI();
+      alert('Itens removidos da visualização. (Para remover do Firebase, certifique-se de configurar o deleteDoc)');
+    }
+  };
 </script>
 
 </body>
