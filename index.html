@@ -63,7 +63,7 @@
       </div>
 
       <label class="lbl" for="comment">Conte mais sobre sua experiência com seu pedido</label>
-      <textarea id="comment" placeholder="O que você mais gostou? Tem algo que podemos melhorar? (opcional)" maxlength="500"></textarea>
+      <textarea id="comment" placeholder="Resuma em poucas palavras o que achou (máx. 140 caracteres)" maxlength="140"></textarea>
       
       <button class="btn" id="submitBtn">Enviar Avaliação 🍝</button>
     </div>
@@ -87,13 +87,12 @@
     const db = getFirestore(app);
 
     const p = new URLSearchParams(location.search);
-    const lojaId = p.get("loja"); // Pegando o parâmetro ?loja=XXX
+    const lojaId = p.get("loja");
     const lojaNome = p.get("nome") || "Nossa Loja";
 
     const card = document.getElementById("card");
     const storeBadge = document.getElementById("storeBadge");
 
-    // 1. Verificação de Segurança do Link
     if (!lojaId) {
       card.innerHTML = `
         <div style="text-align:center;padding:20px">
@@ -102,7 +101,6 @@
           <p style="font-size:14px;color:var(--muted);margin-top:10px">Por favor, utilize o link enviado pela loja para avaliar seu pedido.</p>
         </div>`;
     } else {
-      // O link é válido, então configuramos a página
       storeBadge.textContent = lojaNome;
       document.title = `Avalie a ${lojaNome} — Ital'in House`;
 
@@ -126,9 +124,8 @@
       }
 
       slider.addEventListener("input", () => update(+slider.value));
-      update(8); // Inicia com nota 8
+      update(8);
 
-      // 2. Envio para o Firebase
       submitBtn.addEventListener("click", async () => {
         submitBtn.disabled = true;
         submitBtn.textContent = "Enviando...";
@@ -142,6 +139,7 @@
             criadoEm: serverTimestamp()
           });
 
+          // ALTERADO: Porcentagem de desconto para 15% no HTML gerado
           card.innerHTML = `
             <div class="success">
               <span class="success-icon">🫶</span>
@@ -150,7 +148,7 @@
               <div class="ok-tag">✓ Resposta enviada</div>
               <div class="cupom-box">
                 <div class="cupom-title">🎁 Um presente especial para você!</div>
-                <div class="cupom-desc">Use o cupom abaixo no seu próximo pedido e ganhe <strong>10% de desconto!</strong></div>
+                <div class="cupom-desc">Use o cupom abaixo no seu próximo pedido e ganhe <strong>15% de desconto!</strong></div>
                 <div class="cupom-code">OBRIGADOIH</div>
                 <div class="cupom-sub">*Válido para pedidos via APP ou AnotaAi</div>
               </div>
