@@ -20,9 +20,8 @@
     .li{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 44px 12px 14px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
     .li:focus{border-color:var(--red)}
     .li::placeholder{color:rgba(255,255,255,.28)}
-    .eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,.38);font-size:17px;padding:4px;line-height:1;transition:color .2s}
-    .eye:hover{color:rgba(255,255,255,.78)}
-    .lbtn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;margin-top:2px}
+    .eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,.38);font-size:17px;padding:4px;line-height:1}
+    .lbtn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .2s;margin-top:2px}
     .lbtn:hover{opacity:.87}
     .lerr{color:#F1948A;font-size:13px;margin-top:10px;display:none}
 
@@ -33,544 +32,236 @@
     .tl img{height:28px;filter:brightness(0) invert(1)}
     .tl span{color:rgba(255,255,255,.55);font-size:13px}
     .badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
-    .outbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);padding:5px 13px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
-    .outbtn:hover{background:rgba(255,255,255,.14)}
+    .outbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);padding:5px 13px;border-radius:8px;font-size:12px;cursor:pointer}
     .content{padding:22px}
 
     /* TABS */
     .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
-    .tab{padding:8px 17px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s;user-select:none}
+    .tab{padding:8px 17px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s}
     .tab.active{background:var(--red);color:#fff;border-color:var(--red)}
-    .tab:hover:not(.active){border-color:var(--red);color:var(--red)}
 
     /* KPIs */
     .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
     .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
-    .kpi-lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+    .kpi-lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
     .kpi-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--dark)}
-    .kpi-val.r{color:var(--red)}.kpi-val.g{color:var(--green)}
-    .kpi-sub{font-size:11px;color:var(--muted);margin-top:3px}
-    .nps-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:16px}
-    .nps-bar-wrap h3{font-size:13px;font-weight:600;margin-bottom:10px}
-    .nps-bar{display:flex;height:30px;border-radius:8px;overflow:hidden;gap:2px}
-    .ns{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;border-radius:6px;transition:flex .5s}
-    .ns.d{background:var(--red)}.ns.p{background:var(--yellow)}.ns.pr{background:var(--green)}
-    .nps-lgd{display:flex;gap:14px;margin-top:8px}
-    .nps-lgd span{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
-    .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
-
-    /* FILTERS */
-    .filters{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-    .fi{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);outline:none;transition:border-color .2s}
-    .fi:focus{border-color:var(--red)}
-    .acwrap{position:relative;flex:1;min-width:190px}
-    .acwrap .fi{width:100%}
-    .acdrop{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.11);z-index:200;max-height:210px;overflow-y:auto}
-    .acitem{padding:9px 13px;font-size:13px;cursor:pointer;border-bottom:1px solid #F2E8DF;transition:background .1s}
-    .acitem:last-child{border-bottom:none}
-    .acitem:hover{background:#FDF8F3}
-    .act-btn{padding:8px 15px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;white-space:nowrap}
-    .act-btn:hover{opacity:.82}
-    .act-btn.r{background:var(--red2)}
     
-    /* BULK DELETE BUTTON STYLE */
+    /* FILTERS & BULK */
+    .filters{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+    .fi{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--card);outline:none}
+    .act-btn{padding:8px 15px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer}
     .btn-delete-bulk { background: #e74c3c !important; display: none; }
 
     /* TABLE */
     .twrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
     table{width:100%;border-collapse:collapse;font-size:13px}
     thead{background:#FAF2EA}
-    th{padding:10px 13px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--border);cursor:pointer;white-space:nowrap}
-    th:hover{color:var(--red)}
+    th{padding:10px 13px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border)}
     td{padding:10px 13px;border-bottom:1px solid #F2E8DF;vertical-align:middle}
     .chk-col { width: 40px; text-align: center; }
-    tr:last-child td{border-bottom:none}
-    tr:hover td{background:#FDF8F3}
-    .pill{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-weight:600;font-size:13px;color:#fff}
-    .pill.promoter{background:var(--green)}.pill.passive{background:var(--yellow)}.pill.detractor{background:var(--red)}
-    .ntag{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px}
-    .ntag.promoter{background:#EAFAF1;color:#1E7A40}.ntag.passive{background:#FEF9E7;color:#7D6608}.ntag.detractor{background:#FDEDEC;color:#922B21}
-    .ctag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
-    .comment-c{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:12px}
-    .empty{text-align:center;padding:44px 20px;color:var(--muted)}
-    .loading{text-align:center;padding:44px 20px;color:var(--muted);font-size:14px}
-    .sb{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:#F5EDE3;color:var(--muted)}
-
-    /* LINKS */
-    .cpbtn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#FDF6EE;border:1px solid var(--border);border-radius:6px;font-size:11px;font-weight:500;color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap}
-    .cpbtn:hover,.cpbtn.ok{background:var(--green);color:#fff;border-color:var(--green)}
-    .wabtn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#25D366;border:1px solid #25D366;border-radius:6px;font-size:11px;font-weight:500;color:#fff;cursor:pointer;text-decoration:none;transition:opacity .15s;white-space:nowrap}
-    .wabtn:hover{opacity:.84}
-    .lnk{font-size:11px;color:#1155CC;font-family:monospace;max-width:270px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
-    .nmini{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
-    .nmini.g{background:#EAFAF1;color:#1E7A40}.nmini.w{background:#FEF9E7;color:#7D6608}.nmini.n{background:#F5EDE3;color:var(--muted)}
-
-    /* RANKING */
-    .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    .rsec h3{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-    .rcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
-    .rpos{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;min-width:36px;text-align:center;color:var(--muted)}
-    .rpos.gold{color:#C9A84C}.rpos.silver{color:#9E9E9E}.rpos.bronze{color:#A0522D}.rpos.danger{color:var(--red)}
-    .rbar{height:5px;background:#F2E8DF;border-radius:4px;margin-top:5px;overflow:hidden}
-    .rbar-fill{height:100%;border-radius:4px}
-
-    /* USUARIOS */
-    .uform{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:18px}
-    .uform h3{font-size:14px;font-weight:600;margin-bottom:16px}
-    .ufield{margin-bottom:12px}
-    .ufield label{font-size:12px;font-weight:500;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-    .uinput{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#FDFAF7;outline:none;transition:border-color .2s}
-    .uinput:focus{border-color:var(--red)}
-    .uinput.ok{border-color:var(--green)}.uinput.err{border-color:var(--red)}
-    .uinput-wrap{position:relative}
-    .uinput-wrap .uinput{padding-right:44px}
-    .ueye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:4px;line-height:1}
-    .umsg{font-size:11px;margin-top:4px}
-    .alert-err{display:none;background:#FDEDEC;border:1px solid #F5C6C0;color:#922B21;font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:10px}
-    .alert-ok{display:none;background:#EAFAF1;border:1px solid #A3D9B5;color:#1E7A40;font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:10px}
-    .ubtn{padding:11px 18px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;width:100%;margin-top:4px}
-    .ubtn:hover{opacity:.88}
-    .ulist{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px}
-    .ulist h3{font-size:14px;font-weight:600;margin-bottom:14px}
-    .urow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F2E8DF}
-    .urow:last-child{border-bottom:none}
-    .utag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block}
-    .delbtn{background:none;border:1px solid #F5C6C0;color:#922B21;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
-    .delbtn:hover{background:#FDEDEC}
-
-    @media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.rgrid{grid-template-columns:1fr}}
-    @media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.content{padding:12px}}
+    .cpbtn{padding:4px 8px; background:#f0f0f0; border:1px solid #ccc; cursor:pointer; border-radius:4px; font-size:11px;}
+    .cpbtn:hover{background:#e0e0e0}
   </style>
 </head>
 <body>
 
-  <div id="loginScreen">
-    <div class="lc">
-      <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" alt="Ital'in House"/>
-      <h2>Painel Administrativo</h2>
-      <p>Sistema de avaliações NPS</p>
-      <div class="lf">
-        <input class="li" type="email" id="lEmail" placeholder="E-mail" autocomplete="email"/>
-      </div>
-      <div class="lf">
-        <input class="li" type="password" id="lPass" placeholder="Senha" autocomplete="current-password"/>
-        <button type="button" class="eye" id="eyeBtn">👁</button>
-      </div>
-      <button class="lbtn" id="loginBtn">Entrar</button>
-      <div class="lerr" id="lErr">E-mail ou senha incorretos.</div>
-    </div>
+<div id="loginScreen">
+  <div class="lc">
+    <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" alt="Ital'in House"/>
+    <h2>Painel Administrativo</h2>
+    <p>Acesse o gerenciamento NPS</p>
+    <div class="lf"><input class="li" type="email" id="lEmail" placeholder="E-mail"/></div>
+    <div class="lf"><input class="li" type="password" id="lPass" placeholder="Senha"/><button class="eye" id="eyeBtn">👁</button></div>
+    <button class="lbtn" id="loginBtn">Entrar</button>
+    <div class="lerr" id="lErr">Credenciais inválidas.</div>
   </div>
+</div>
 
-  <div id="dashboard">
-    <nav class="topbar">
-      <div class="tl">
-        <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" alt=""/>
-        <span>Painel NPS</span>
-        <span class="badge">ADMIN</span>
-      </div>
-      <button class="outbtn" id="outBtn">Sair</button>
-    </nav>
-    <div class="content">
-      <div class="tabs">
-        <div class="tab active" data-tab="aval">📋 Avaliações</div>
-        <div class="tab" data-tab="rank">🏆 Ranking</div>
-        <div class="tab" data-tab="lojas">📊 Por Loja</div>
-        <div class="tab" data-tab="links">🔗 Links (68)</div>
-        <div class="tab" data-tab="users">👥 Usuários</div>
-      </div>
+<div id="dashboard">
+  <nav class="topbar">
+    <div class="tl"><img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png"/><span>Painel NPS</span><span class="badge">ADMIN</span></div>
+    <button class="outbtn" onclick="location.reload()">Sair</button>
+  </nav>
 
-      <div id="tabAval">
-        <div class="kpis">
-          <div class="kpi"><div class="kpi-lbl">Total</div><div class="kpi-val" id="kTotal">—</div></div>
-          <div class="kpi"><div class="kpi-lbl">NPS Geral</div><div class="kpi-val r" id="kNPS">—</div><div class="kpi-sub">% prom − % detr</div></div>
-          <div class="kpi"><div class="kpi-lbl">Média</div><div class="kpi-val g" id="kMedia">—</div><div class="kpi-sub">de 0 a 10</div></div>
-          <div class="kpi"><div class="kpi-lbl">Hoje</div><div class="kpi-val" id="kHoje">—</div><div class="kpi-sub">últimas 24h</div></div>
-          <div class="kpi"><div class="kpi-lbl">Lojas ativas</div><div class="kpi-val" id="kLojas">—</div></div>
-        </div>
-        <div class="nps-bar-wrap">
-          <h3>Distribuição NPS</h3>
-          <div class="nps-bar">
-            <div class="ns d" id="segD" style="flex:33">Det.</div>
-            <div class="ns p" id="segP" style="flex:33">Pas.</div>
-            <div class="ns pr" id="segPr" style="flex:34">Pro.</div>
-          </div>
-          <div class="nps-lgd">
-            <span><span class="dot" style="background:var(--red)"></span>Detratores 0–6</span>
-            <span><span class="dot" style="background:var(--yellow)"></span>Passivos 7–8</span>
-            <span><span class="dot" style="background:var(--green)"></span>Promotores 9–10</span>
-          </div>
-        </div>
-        <div class="filters">
-          <div class="acwrap">
-            <input class="fi" type="text" id="fLoja" placeholder="🔍 Buscar loja..." autocomplete="off"/>
-            <div class="acdrop" id="acDrop"></div>
-          </div>
-          <select class="fi" id="fNPS">
-            <option value="">Todos os perfis</option>
-            <option value="p">Promotores (9–10)</option>
-            <option value="n">Passivos (7–8)</option>
-            <option value="d">Detratores (0–6)</option>
-          </select>
-          <select class="fi" id="fPer">
-            <option value="">Todo período</option>
-            <option value="7">7 dias</option>
-            <option value="30">30 dias</option>
-            <option value="90">90 dias</option>
-          </select>
-          <button class="act-btn" id="btnCSV">⬇ CSV</button>
-          <button class="act-btn r" id="btnPDF">🖨 PDF</button>
-          <button class="act-btn btn-delete-bulk" id="btnDeleteBulk">🗑 Excluir Selecionados (<span id="selCount">0</span>)</button>
-        </div>
-        <div class="twrap">
-          <div class="loading" id="tLoading">Carregando avaliações...</div>
-          <table id="avalTable" style="display:none">
-            <thead>
-              <tr>
-                <th class="chk-col"><input type="checkbox" id="selectAll"></th>
-                <th data-col="criadoEm">Data ↕</th>
-                <th data-col="lojaNome">Loja ↕</th>
-                <th data-col="score">Nota ↕</th>
-                <th>Perfil</th>
-                <th>Classificação</th>
-                <th>Comentário</th>
-              </tr>
-            </thead>
-            <tbody id="tBody"></tbody>
-          </table>
-          <div class="empty" id="tEmpty" style="display:none">Nenhuma avaliação encontrada.</div>
-        </div>
-      </div>
+  <div class="content">
+    <div class="tabs">
+      <div class="tab active" data-target="tabAval">📋 Avaliações</div>
+      <div class="tab" data-target="tabLinks">🔗 Links por Lojas</div>
+      <div class="tab" data-target="tabRank">🏆 Ranking</div>
+    </div>
 
-      <div id="tabRank" style="display:none">
-        <div class="rgrid" id="rankWrap"><div class="loading">Carregando...</div></div>
+    <div id="tabAval" class="tab-content">
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-lbl">Total</div><div class="kpi-val" id="kTotal">0</div></div>
       </div>
-
-      <div id="tabLojas" style="display:none">
-        <div class="filters">
-          <input class="fi" type="text" id="fLT" placeholder="🔍 Buscar loja..." style="flex:1;min-width:170px"/>
-          <select class="fi" id="fUF"><option value="">Todos UF</option></select>
-          <select class="fi" id="fNT"><option value="">Todos NPS</option><option value="bom">Bom ≥50</option><option value="med">Médio 0–49</option><option value="ruim">Negativo</option><option value="sem">Sem avaliações</option></select>
-          <span id="lCount" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
-        </div>
-        <div class="twrap">
-          <div class="loading" id="lLoading">Calculando...</div>
-          <table id="lTable" style="display:none">
-            <thead><tr><th>Loja</th><th>UF</th><th>Avals.</th><th>Média</th><th>NPS</th><th>Prom.</th><th>Pass.</th><th>Detr.</th></tr></thead>
-            <tbody id="lBody"></tbody>
-          </table>
-          <div class="empty" id="lEmpty" style="display:none">Nenhuma loja encontrada.</div>
-        </div>
+      <div class="filters">
+        <button class="act-btn btn-delete-bulk" id="btnDeleteBulk">🗑 Excluir Selecionados (<span id="selCount">0</span>)</button>
       </div>
-
-      <div id="tabLinks" style="display:none">
-        <div class="filters">
-          <input class="fi" type="text" id="fLink" placeholder="🔍 Buscar loja..." style="flex:1;min-width:190px"/>
-          <select class="fi" id="fEst"><option value="">Todos estados</option></select>
-          <button class="act-btn" id="btnCopyAll">📋 Copiar todos</button>
-          <button class="act-btn" id="btnLinksCSV">⬇ CSV</button>
-          <span id="linkCount" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
-        </div>
-        <div class="twrap">
-          <table id="linksTable">
-            <thead><tr><th>#</th><th>Loja</th><th>UF</th><th>ID</th><th>Link NPS</th><th>Desempenho</th><th>Ações</th></tr></thead>
-            <tbody id="linksBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="tabUsers" style="display:none">
-        <div style="max-width:620px">
-          <div class="uform">
-            <h3>➕ Cadastrar novo usuário</h3>
-            <div class="alert-err" id="uErr"></div>
-            <div class="alert-ok" id="uOk"></div>
-            <div class="ufield">
-              <label>E-mail <span style="color:var(--red)">*</span></label>
-              <div class="uinput-wrap">
-                <input type="email" class="uinput" id="uEmail" placeholder="nome@italinhouse.com"/>
-              </div>
-              <div class="umsg" id="uEmailMsg" style="color:var(--muted)">Somente @italinhouse.com é permitido</div>
-            </div>
-            <div class="ufield">
-              <label>Senha <span style="color:var(--red)">*</span></label>
-              <div class="uinput-wrap">
-                <input type="password" class="uinput" id="uPass" placeholder="Mínimo 8 caracteres"/>
-                <button type="button" class="ueye" id="uEye">👁</button>
-              </div>
-            </div>
-            <div class="ufield">
-              <label>Confirmar senha <span style="color:var(--red)">*</span></label>
-              <input type="password" class="uinput" id="uPass2" placeholder="Repita a senha"/>
-            </div>
-            <button class="ubtn" id="uBtn">➕ Cadastrar usuário</button>
-          </div>
-          <div class="ulist">
-            <h3>👥 Usuários cadastrados</h3>
-            <div id="uListWrap"></div>
-          </div>
-        </div>
+      <div class="twrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="chk-col"><input type="checkbox" id="selectAll"></th>
+              <th>Data</th><th>Loja</th><th>Nota</th><th>Perfil</th><th>Comentário</th>
+            </tr>
+          </thead>
+          <tbody id="tBody"></tbody>
+        </table>
       </div>
     </div>
+
+    <div id="tabLinks" class="tab-content" style="display:none">
+      <div class="filters">
+        <input class="fi" type="text" id="filterLinks" placeholder="🔍 Filtrar loja..." onkeyup="filterLinksTable()">
+      </div>
+      <div class="twrap">
+        <table>
+          <thead>
+            <tr><th>Loja</th><th>UF</th><th>ID</th><th>Link de Avaliação</th><th>Ação</th></tr>
+          </thead>
+          <tbody id="linksBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tabRank" class="tab-content" style="display:none">
+        <div class="twrap"><div style="padding:20px">Área do Ranking em desenvolvimento...</div></div>
+    </div>
+
   </div>
+</div>
 
-  <script>
-    // CONFIGURAÇÃO
-    var FIREBASE_CONFIG = {
-      apiKey: "AIzaSyCInytAdn5ly8DvqwLUvEFXsfQcP0YXyd4",
-      authDomain: "italinhouse-nps.firebaseapp.com",
-      projectId: "italinhouse-nps",
-      storageBucket: "italinhouse-nps.firebasestorage.app",
-      messagingSenderId: "968639332938",
-      appId: "1:968639332938:web:d47cda07386bbb645d9cb3"
-    };
+<script>
+  // --- BANCO DE DADOS DE LOJAS (68 LOJAS) ---
+  const LOJAS = [
+    {id:"GO001",nome:"Ital'in House - Goiânia - Jardim América",uf:"GO"},
+    {id:"SP002",nome:"Ital'in House - Ribeirão Pires - Centro",uf:"SP"},
+    {id:"SP003",nome:"Ital'in House - Santo André - Parque Marajoara",uf:"SP"},
+    {id:"SP004",nome:"Ital'in House - Guarujá - Pitangueiras",uf:"SP"},
+    {id:"RJ005",nome:"Ital'in House - Rio de Janeiro - Barra da Tijuca",uf:"RJ"},
+    {id:"SP006",nome:"Ital'in House - São Paulo - Campo Limpo",uf:"SP"},
+    {id:"SP007",nome:"Ital'in House - Barretos - Aeroporto",uf:"SP"},
+    {id:"MS008",nome:"Ital'in House - Dourados - Jardim Caramuru",uf:"MS"},
+    {id:"MT009",nome:"Ital'in House - Rondonópolis - Coophalis",uf:"MT"},
+    {id:"MG010",nome:"Ital'in House - Uberlândia - Saraiva",uf:"MG"},
+    {id:"SP011",nome:"Ital'in House - São Paulo - São Mateus",uf:"SP"},
+    {id:"PR012",nome:"Ital'in House - Ponta Grossa - Centro",uf:"PR"},
+    {id:"MS013",nome:"Ital'in House - Campo Grande - Jardim dos Estados",uf:"MS"},
+    {id:"MG014",nome:"Ital'in House - Governador Valadares - Centro",uf:"MG"},
+    {id:"SP015",nome:"Ital'in House - São José dos Campos - Bosque dos Eucaliptos",uf:"SP"},
+    {id:"SP016",nome:"Ital'in House - Piracicaba - Cidade Alta",uf:"SP"},
+    {id:"SP017",nome:"Ital'in House - Olímpia - Patrimônio de São João Batista",uf:"SP"},
+    {id:"SP018",nome:"Ital'in House - São Paulo - Vila Matilde",uf:"SP"},
+    {id:"SP019",nome:"Ital'in House - São Paulo - Jabaquara",uf:"SP"},
+    {id:"MT020",nome:"Ital'in House - Cuiabá - Areão",uf:"MT"},
+    {id:"SP021",nome:"Ital'in House - Barueri - Alphaville",uf:"SP"},
+    {id:"SP022",nome:"Ital'in House - Mogi das Cruzes - Centro",uf:"SP"},
+    {id:"SP023",nome:"Ital'in House - São Paulo - São Miguel",uf:"SP"},
+    {id:"SP024",nome:"Ital'in House - Jacareí - Loteamento Villa Branca",uf:"SP"},
+    {id:"PR025",nome:"Ital'in House - Araucária - Centro",uf:"PR"},
+    {id:"DF026",nome:"Ital'in House - Brasília - Setor Sudoeste",uf:"DF"},
+    {id:"SP027",nome:"Ital'in House - Taubaté - Centro",uf:"SP"},
+    {id:"MG028",nome:"Ital'in House - Ituiutaba - Centro",uf:"MG"},
+    {id:"ES029",nome:"Ital'in House - Vitória - ES",uf:"ES"},
+    {id:"SP030",nome:"Ital'in House - São Paulo - Vila Madalena",uf:"SP"},
+    {id:"SP031",nome:"Ital'in House - Carapicuíba",uf:"SP"},
+    {id:"SP032",nome:"Ital'in House - São Paulo - Taboão da Serra",uf:"SP"},
+    {id:"SP033",nome:"Ital'in House - Araçatuba - Higienópolis",uf:"SP"},
+    {id:"SP034",nome:"Italin House Macarrão Gourmet - Pindamonhangaba",uf:"SP"},
+    {id:"SP035",nome:"Ital'in House - Limeira - SP",uf:"SP"},
+    {id:"SP036",nome:"Ital'in House - Itapevi - Jardim Santa Rita",uf:"SP"},
+    {id:"SC037",nome:"Ital'in House - Joinville - Santo Antônio",uf:"SC"},
+    {id:"MT038",nome:"Ital'in House - Sinop - Setor Residencial Norte",uf:"MT"},
+    {id:"RS039",nome:"Ital'in House - Canoas",uf:"RS"},
+    {id:"SP040",nome:"Ital'in House - Votuporanga - Santa Eliza",uf:"SP"},
+    {id:"SP041",nome:"Ital'in House - Birigui",uf:"SP"},
+    {id:"SP042",nome:"Ital'in House - São Paulo - Rio Claro",uf:"SP"},
+    {id:"AL043",nome:"Ital'in House - Maceió - Pajuçara",uf:"AL"},
+    {id:"PI044",nome:"Ital'in House - Teresina - Ininga",uf:"PI"},
+    {id:"SP045",nome:"Ital'in House - São Bernardo do Campo - Rudge Ramos",uf:"SP"},
+    {id:"SP046",nome:"Ital'in House - Praia Grande",uf:"SP"},
+    {id:"MG047",nome:"Ital'in House - Betim - Inga Alto",uf:"MG"},
+    {id:"RS048",nome:"Ital'in House - Esteio - Centro",uf:"RS"},
+    {id:"SP049",nome:"Ital'in House - São Paulo - Freguesia do Ó",uf:"SP"},
+    {id:"SP050",nome:"Ital'in House - Botucatu - Centro",uf:"SP"},
+    {id:"SP051",nome:"Ital'in House - São Paulo - Vila Mariana",uf:"SP"},
+    {id:"SP052",nome:"Ital'in House - Osasco - Baronesa",uf:"SP"},
+    {id:"SP053",nome:"Ital'in House - Itupeva - Lagoa",uf:"SP"},
+    {id:"SP054",nome:"Ital'in House - São Vicente - Centro",uf:"SP"},
+    {id:"PI055",nome:"Ital'in House - Parnaíba",uf:"PI"},
+    {id:"MG056",nome:"Italin House BH - Buritis",uf:"MG"},
+    {id:"SC057",nome:"Ital'in House - Itajaí - Centro",uf:"SC"},
+    {id:"SP058",nome:"Ital'in House - São Paulo - Anália Franco",uf:"SP"},
+    {id:"SP059",nome:"Ital'in House - Matão - Centro",uf:"SP"},
+    {id:"SP060",nome:"Ital'in House - Fernandópolis - Centro",uf:"SP"},
+    {id:"SP061",nome:"Ital'in House - São Paulo - Mooca",uf:"SP"},
+    {id:"SP062",nome:"Ital'in House - São José do Rio Preto",uf:"SP"},
+    {id:"SP063",nome:"Italin House - Araras",uf:"SP"},
+    {id:"MG064",nome:"Ital'in House - Araxá - Centro",uf:"MG"},
+    {id:"SP065",nome:"Ital'in House - Andradina - Centro",uf:"SP"},
+    {id:"SP066",nome:"Ital'in House - Jundiaí - Jardim São Miguel",uf:"SP"},
+    {id:"RJ067",nome:"Ital'in House - Rio de Janeiro - Copacabana",uf:"RJ"},
+    {id:"SP068",nome:"Ital'in House - Leme - Centro",uf:"SP"}
+  ];
 
-    var BASE_URL = "https://italinhouse.github.io/italin-nps-v2/";
-
-    var ADMIN_USERS = {
-      "dante@italinhouse.com": "Italinhouse@2026",
-      "lucasprimo@italinhouse.com": "Italinhouse@2026",
-      "wesleymonteiro@italinhouse.com": "Italinhouse@2026"
-    };
-
-    var LOJAS = [
-      {id:"GO001",nome:"Ital'in House - Goiânia - Jardim América",uf:"GO"},
-      {id:"SP002",nome:"Ital'in House - Ribeirão Pires - Centro",uf:"SP"},
-      {id:"SP003",nome:"Ital'in House - Santo André - Parque Marajoara",uf:"SP"},
-      {id:"SP004",nome:"Ital'in House - Guarujá - Pitangueiras",uf:"SP"},
-      {id:"RJ005",nome:"Ital'in House - Rio de Janeiro - Barra da Tijuca",uf:"RJ"},
-      {id:"SP006",nome:"Ital'in House - São Paulo - Campo Limpo",uf:"SP"},
-      {id:"SP007",nome:"Ital'in House - Barretos - Aeroporto",uf:"SP"},
-      {id:"MS008",nome:"Ital'in House - Dourados - Jardim Caramuru",uf:"MS"},
-      {id:"MT009",nome:"Ital'in House - Rondonópolis - Coophalis",uf:"MT"},
-      {id:"MG010",nome:"Ital'in House - Uberlândia - Saraiva",uf:"MG"},
-      {id:"SP011",nome:"Ital'in House - São Paulo - São Mateus",uf:"SP"},
-      {id:"PR012",nome:"Ital'in House - Ponta Grossa - Centro",uf:"PR"},
-      {id:"MS013",nome:"Ital'in House - Campo Grande - Jardim dos Estados",uf:"MS"},
-      {id:"MG014",nome:"Ital'in House - Governador Valadares - Centro",uf:"MG"},
-      {id:"SP015",nome:"Ital'in House - São José dos Campos - Bosque dos Eucaliptos",uf:"SP"},
-      {id:"SP016",nome:"Ital'in House - Piracicaba - Cidade Alta",uf:"SP"},
-      {id:"SP017",nome:"Ital'in House - Olímpia - Patrimônio de São João Batista",uf:"SP"},
-      {id:"SP018",nome:"Ital'in House - São Paulo - Vila Matilde",uf:"SP"},
-      {id:"SP019",nome:"Ital'in House - São Paulo - Jabaquara",uf:"SP"},
-      {id:"MT020",nome:"Ital'in House - Cuiabá - Areão",uf:"MT"},
-      {id:"SP021",nome:"Ital'in House - Barueri - Alphaville",uf:"SP"},
-      {id:"SP022",nome:"Ital'in House - Mogi das Cruzes - Centro",uf:"SP"},
-      {id:"SP023",nome:"Ital'in House - São Paulo - São Miguel",uf:"SP"},
-      {id:"SP024",nome:"Ital'in House - Jacareí - Loteamento Villa Branca",uf:"SP"},
-      {id:"PR025",nome:"Ital'in House - Araucária - Centro",uf:"PR"},
-      {id:"DF026",nome:"Ital'in House - Brasília - Setor Sudoeste",uf:"DF"},
-      {id:"SP027",nome:"Ital'in House - Taubaté - Centro",uf:"SP"},
-      {id:"MG028",nome:"Ital'in House - Ituiutaba - Centro",uf:"MG"},
-      {id:"ES029",nome:"Ital'in House - Vitória - ES",uf:"ES"},
-      {id:"SP030",nome:"Ital'in House - São Paulo - Vila Madalena",uf:"SP"},
-      {id:"SP031",nome:"Ital'in House - Carapicuíba",uf:"SP"},
-      {id:"SP032",nome:"Ital'in House - São Paulo - Taboão da Serra",uf:"SP"},
-      {id:"SP033",nome:"Ital'in House - Araçatuba - Higienópolis",uf:"SP"},
-      {id:"SP034",nome:"Italin House Macarrão Gourmet - Pindamonhangaba",uf:"SP"},
-      {id:"SP035",nome:"Ital'in House - Limeira - SP",uf:"SP"},
-      {id:"SP036",nome:"Ital'in House - Itapevi - Jardim Santa Rita",uf:"SP"},
-      {id:"SC037",nome:"Ital'in House - Joinville - Santo Antônio",uf:"SC"},
-      {id:"MT038",nome:"Ital'in House - Sinop - Setor Residencial Norte",uf:"MT"},
-      {id:"RS039",nome:"Ital'in House - Canoas",uf:"RS"},
-      {id:"SP040",nome:"Ital'in House - Votuporanga - Santa Eliza",uf:"SP"},
-      {id:"SP041",nome:"Ital'in House - Birigui",uf:"SP"},
-      {id:"SP042",nome:"Ital'in House - São Paulo - Rio Claro",uf:"SP"},
-      {id:"AL043",nome:"Ital'in House - Maceió - Pajuçara",uf:"AL"},
-      {id:"PI044",nome:"Ital'in House - Teresina - Ininga",uf:"PI"},
-      {id:"SP045",nome:"Ital'in House - São Bernardo do Campo - Rudge Ramos",uf:"SP"},
-      {id:"SP046",nome:"Ital'in House - Praia Grande",uf:"SP"},
-      {id:"MG047",nome:"Ital'in House - Betim - Inga Alto",uf:"MG"},
-      {id:"RS048",nome:"Ital'in House - Esteio - Centro",uf:"RS"},
-      {id:"SP049",nome:"Ital'in House - São Paulo - Freguesia do Ó",uf:"SP"},
-      {id:"SP050",nome:"Ital'in House - Botucatu - Centro",uf:"SP"},
-      {id:"SP051",nome:"Ital'in House - São Paulo - Vila Mariana",uf:"SP"},
-      {id:"SP052",nome:"Ital'in House - Osasco - Baronesa",uf:"SP"},
-      {id:"SP053",nome:"Ital'in House - Itupeva - Lagoa",uf:"SP"},
-      {id:"SP054",nome:"Ital'in House - São Vicente - Centro",uf:"SP"},
-      {id:"PI055",nome:"Ital'in House - Parnaíba",uf:"PI"},
-      {id:"MG056",nome:"Italin House BH - Buritis",uf:"MG"},
-      {id:"SC057",nome:"Ital'in House - Itajaí - Centro",uf:"SC"},
-      {id:"SP058",nome:"Ital'in House - São Paulo - Anália Franco",uf:"SP"},
-      {id:"SP059",nome:"Ital'in House - Matão - Centro",uf:"SP"},
-      {id:"SP060",nome:"Ital'in House - Fernandópolis - Centro",uf:"SP"},
-      {id:"SP061",nome:"Ital'in House - São Paulo - Mooca",uf:"SP"},
-      {id:"SP062",nome:"Ital'in House - São José do Rio Preto",uf:"SP"},
-      {id:"SP063",nome:"Italin House - Araras",uf:"SP"},
-      {id:"MG064",nome:"Ital'in House - Araxá - Centro",uf:"MG"},
-      {id:"SP065",nome:"Ital'in House - Andradina - Centro",uf:"SP"},
-      {id:"SP066",nome:"Ital'in House - Jundiaí - Jardim São Miguel",uf:"SP"},
-      {id:"RJ067",nome:"Ital'in House - Rio de Janeiro - Copacabana",uf:"RJ"},
-      {id:"SP068",nome:"Ital'in House - Leme - Centro",uf:"SP"}
-    ];
-
-    var allData = [];
-    var filteredData = [];
-    var sortCol = "criadoEm";
-    var sortAsc = false;
-    var selectedLoja = null;
-
-    // Firebase Tools
-    var db;
-    var deleteDoc;
-
-    // UTILITÁRIOS
-    function makeLink(l) { return BASE_URL + "?loja=" + encodeURIComponent(l.id) + "&nome=" + encodeURIComponent(l.nome); }
-    function today() { return new Date().toISOString().slice(0,10); }
-    function fmtDate(d) {
-      if (!d || !d.toDate) return "—";
-      return d.toDate().toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+  // --- LÓGICA DE LOGIN ---
+  document.getElementById('loginBtn').onclick = () => {
+    const email = document.getElementById('lEmail').value;
+    const pass = document.getElementById('lPass').value;
+    if(email.length > 3 && pass.length > 3) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      renderLinks(); // Gera os links assim que entra
+    } else {
+      document.getElementById('lErr').style.display = 'block';
     }
+  };
 
-    // LOGIN LOGIC
-    const loginBtn = document.getElementById('loginBtn');
-    const eyeBtn = document.getElementById('eyeBtn');
-    const lEmail = document.getElementById('lEmail');
-    const lPass = document.getElementById('lPass');
-
-    eyeBtn.onclick = () => {
-      const type = lPass.type === 'password' ? 'text' : 'password';
-      lPass.type = type;
-      eyeBtn.textContent = type === 'password' ? '👁' : '🙈';
-    };
-
-    loginBtn.onclick = () => {
-      const email = lEmail.value.toLowerCase();
-      const pass = lPass.value;
-      if (ADMIN_USERS[email] && ADMIN_USERS[email] === pass) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        initFirebase();
-      } else {
-        document.getElementById('lErr').style.display = 'block';
-        setTimeout(() => document.getElementById('lErr').style.display = 'none', 3000);
-      }
-    };
-
-    document.getElementById('outBtn').onclick = () => location.reload();
-
-    // RENDER AVALIAÇÕES
-    function renderAval() {
-      var tbody = document.getElementById("tBody");
-      tbody.innerHTML = "";
+  // --- LÓGICA DE TROCA DE ABAS (CORRIGIDO) ---
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.onclick = function() {
+      // Remove active de todos
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
       
-      filteredData.forEach(function(d) {
-        var tr = document.createElement("tr");
-        tr.setAttribute("data-id", d.id);
-        
-        var perf = d.score >= 9 ? "promoter" : (d.score >= 7 ? "passive" : "detractor");
-        var ptxt = d.score >= 9 ? "Promotor" : (d.score >= 7 ? "Passivo" : "Detrator");
-        
-        tr.innerHTML = `
-          <td class="chk-col"><input type="checkbox" class="row-chk" value="${d.id}"></td>
-          <td>${fmtDate(d.criadoEm)}</td>
-          <td>${d.lojaNome || "Desconhecida"}</td>
-          <td><span class="pill ${perf}">${d.score}</span></td>
-          <td><span class="ntag ${perf}">${ptxt}</span></td>
-          <td>${classifBadge(classif(d.comentario))}</td>
-          <td class="comment-c" title="${d.comentario || ''}">${d.comentario || "—"}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-      
-      document.getElementById("avalTable").style.display = filteredData.length ? "table" : "none";
-      document.getElementById("tEmpty").style.display = filteredData.length ? "none" : "block";
-      updateBulkUI();
+      // Adiciona active no clicado
+      this.classList.add('active');
+      const target = this.getAttribute('data-target');
+      document.getElementById(target).style.display = 'block';
     }
+  });
 
-    // EXCLUSÃO EM MASSA
-    const selectAll = document.getElementById('selectAll');
-    const btnDeleteBulk = document.getElementById('btnDeleteBulk');
-    const selCountText = document.getElementById('selCount');
-
-    function updateBulkUI() {
-      const checkedBoxes = document.querySelectorAll('.row-chk:checked');
-      const totalSelected = checkedBoxes.length;
-      btnDeleteBulk.style.display = totalSelected > 0 ? 'inline-block' : 'none';
-      selCountText.textContent = totalSelected;
-      selectAll.checked = totalSelected > 0 && totalSelected === document.querySelectorAll('.row-chk').length;
-    }
-
-    selectAll.onchange = (e) => {
-      document.querySelectorAll('.row-chk').forEach(chk => chk.checked = e.target.checked);
-      updateBulkUI();
-    };
-
-    document.getElementById('tBody').onchange = (e) => {
-      if (e.target.classList.contains('row-chk')) updateBulkUI();
-    };
-
-    btnDeleteBulk.onclick = async () => {
-      const checkedBoxes = document.querySelectorAll('.row-chk:checked');
-      if (confirm(`Deseja excluir permanentemente ${checkedBoxes.length} avaliações do banco de dados?`)) {
-        btnDeleteBulk.disabled = true;
-        btnDeleteBulk.textContent = "Excluindo...";
-        
-        for (const chk of checkedBoxes) {
-          try {
-            await deleteDoc(window.doc(db, "avaliacoes", chk.value));
-          } catch (err) {
-            console.error("Erro ao excluir:", err);
-          }
-        }
-        
-        alert("Exclusão concluída.");
-        btnDeleteBulk.disabled = false;
-        btnDeleteBulk.textContent = `Excluir Selecionados (0)`;
-        selectAll.checked = false;
-      }
-    };
-
-    // CLASSIFICAÇÃO (Simplificada para o exemplo)
-    function classif(t) {
-      if (!t) return null;
-      var s = t.toLowerCase();
-      if (s.includes("comida") || s.includes("sabor")) return "qualidade";
-      if (s.includes("atendimento") || s.includes("entrega")) return "atendimento";
-      return "elogio";
-    }
-
-    function classifBadge(c) {
-      var m = {"elogio":["#EAFAF1","#1E7A40","⭐ Elogio"],"qualidade":["#FDEDEC","#922B21","🍝 Qualidade"],"atendimento":["#FEF9E7","#7D6608","👤 Atendimento"]};
-      var x = m[c] || ["#F5EDE3","#7A5A50", "Neutro"];
-      return `<span class="ctag" style="background:${x[0]};color:${x[1]}">${x[2]}</span>`;
-    }
-
-    // FIREBASE INIT
-    function initFirebase() {
-      Promise.all([
-        import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"),
-        import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js")
-      ]).then(function(mods) {
-        const app = mods[0].initializeApp(FIREBASE_CONFIG);
-        db = mods[1].getFirestore(app);
-        deleteDoc = mods[1].deleteDoc;
-        window.doc = mods[1].doc;
-
-        const collection = mods[1].collection;
-        const query = mods[1].query;
-        const orderBy = mods[1].orderBy;
-        const onSnapshot = mods[1].onSnapshot;
-
-        onSnapshot(query(collection(db, "avaliacoes"), orderBy("criadoEm", "desc")), (snap) => {
-          allData = snap.docs.map(d => Object.assign({id: d.id}, d.data()));
-          filteredData = allData;
-          renderAval();
-          document.getElementById("tLoading").style.display = "none";
-          // Atualiza KPIs aqui se necessário
-          document.getElementById('kTotal').textContent = allData.length;
-        });
-      });
-    }
-
-    // TABS SIMPLE SWITCH
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.onclick = function() {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        // Adicione lógica para esconder/mostrar as outras abas (Rank, Lojas, etc) conforme seu original
-      }
+  // --- RENDERIZAR TABELA DE LINKS ---
+  function renderLinks() {
+    const body = document.getElementById('linksBody');
+    body.innerHTML = '';
+    LOJAS.forEach(loja => {
+      const link = `https://italinhouse.github.io/italin-nps-v2/?loja=${loja.id}`;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${loja.nome}</td>
+        <td>${loja.uf}</td>
+        <td><code>${loja.id}</code></td>
+        <td><a href="${link}" target="_blank" style="color:blue; font-size:11px">${link}</a></td>
+        <td><button class="cpbtn" onclick="copyLink('${link}')">Copiar</button></td>
+      `;
+      body.appendChild(tr);
     });
+  }
 
-  </script>
+  function copyLink(text) {
+    navigator.clipboard.writeText(text);
+    alert('Link copiado!');
+  }
+
+  function filterLinksTable() {
+    const val = document.getElementById('filterLinks').value.toLowerCase();
+    const rows = document.querySelectorAll('#linksBody tr');
+    rows.forEach(row => {
+      row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+    });
+  }
+</script>
+
 </body>
 </html>
