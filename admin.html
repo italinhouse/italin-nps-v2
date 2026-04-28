@@ -17,4 +17,854 @@
     .lc h2{color:#fff;font-family:'Playfair Display',serif;font-size:21px;margin-bottom:4px}
     .lc p{color:rgba(255,255,255,.4);font-size:13px;margin-bottom:26px}
     .lf{position:relative;margin-bottom:10px}
-    .li{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 44px 12px 14px;color:#fff;font-family:'DM
+    .li{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 44px 12px 14px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+    .li:focus{border-color:var(--red)}
+    .li::placeholder{color:rgba(255,255,255,.28)}
+    .eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,.38);font-size:17px;padding:4px;line-height:1;transition:color .2s}
+    .eye:hover{color:rgba(255,255,255,.78)}
+    .lbtn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;margin-top:2px}
+    .lbtn:hover{opacity:.87}
+    .lerr{color:#F1948A;font-size:13px;margin-top:10px;display:none}
+
+    /* DASHBOARD */
+    #dashboard{display:none;min-height:100vh}
+    .topbar{background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+    .tl{display:flex;align-items:center;gap:12px}
+    .tl img{height:28px;filter:brightness(0) invert(1)}
+    .tl span{color:rgba(255,255,255,.55);font-size:13px}
+    .badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+    .outbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);padding:5px 13px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+    .outbtn:hover{background:rgba(255,255,255,.14)}
+    .content{padding:22px}
+
+    /* TABS */
+    .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+    .tab{padding:8px 17px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s;user-select:none}
+    .tab.active{background:var(--red);color:#fff;border-color:var(--red)}
+    .tab:hover:not(.active){border-color:var(--red);color:var(--red)}
+
+    /* KPIs */
+    .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+    .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+    .kpi-lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+    .kpi-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--dark)}
+    .kpi-val.r{color:var(--red)}.kpi-val.g{color:var(--green)}
+    .kpi-sub{font-size:11px;color:var(--muted);margin-top:3px}
+    .nps-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:16px}
+    .nps-bar-wrap h3{font-size:13px;font-weight:600;margin-bottom:10px}
+    .nps-bar{display:flex;height:30px;border-radius:8px;overflow:hidden;gap:2px}
+    .ns{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;border-radius:6px;transition:flex .5s}
+    .ns.d{background:var(--red)}.ns.p{background:var(--yellow)}.ns.pr{background:var(--green)}
+    .nps-lgd{display:flex;gap:14px;margin-top:8px}
+    .nps-lgd span{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+    .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+
+    /* FILTERS */
+    .filters{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+    .fi{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--card);outline:none;transition:border-color .2s}
+    .fi:focus{border-color:var(--red)}
+    .acwrap{position:relative;flex:1;min-width:190px}
+    .acwrap .fi{width:100%}
+    .acdrop{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.11);z-index:200;max-height:210px;overflow-y:auto}
+    .acitem{padding:9px 13px;font-size:13px;cursor:pointer;border-bottom:1px solid #F2E8DF;transition:background .1s}
+    .acitem:last-child{border-bottom:none}
+    .acitem:hover{background:#FDF8F3}
+    .act-btn{padding:8px 15px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity .2s;white-space:nowrap}
+    .act-btn:hover{opacity:.82}
+    .act-btn.r{background:var(--red2)}
+
+    /* TABLE */
+    .twrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead{background:#FAF2EA}
+    th{padding:10px 13px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--border);cursor:pointer;white-space:nowrap}
+    th:hover{color:var(--red)}
+    td{padding:10px 13px;border-bottom:1px solid #F2E8DF;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#FDF8F3}
+    .pill{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-weight:600;font-size:13px;color:#fff}
+    .pill.promoter{background:var(--green)}.pill.passive{background:var(--yellow)}.pill.detractor{background:var(--red)}
+    .ntag{font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px}
+    .ntag.promoter{background:#EAFAF1;color:#1E7A40}.ntag.passive{background:#FEF9E7;color:#7D6608}.ntag.detractor{background:#FDEDEC;color:#922B21}
+    .ctag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+    .comment-c{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:12px}
+    .empty{text-align:center;padding:44px 20px;color:var(--muted)}
+    .loading{text-align:center;padding:44px 20px;color:var(--muted);font-size:14px}
+    .sb{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;background:#F5EDE3;color:var(--muted)}
+
+    /* LINKS */
+    .cpbtn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#FDF6EE;border:1px solid var(--border);border-radius:6px;font-size:11px;font-weight:500;color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap}
+    .cpbtn:hover,.cpbtn.ok{background:var(--green);color:#fff;border-color:var(--green)}
+    .wabtn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#25D366;border:1px solid #25D366;border-radius:6px;font-size:11px;font-weight:500;color:#fff;cursor:pointer;text-decoration:none;transition:opacity .15s;white-space:nowrap}
+    .wabtn:hover{opacity:.84}
+    .lnk{font-size:11px;color:#1155CC;font-family:monospace;max-width:270px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+    .nmini{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+    .nmini.g{background:#EAFAF1;color:#1E7A40}.nmini.w{background:#FEF9E7;color:#7D6608}.nmini.n{background:#F5EDE3;color:var(--muted)}
+
+    /* RANKING */
+    .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .rsec h3{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+    .rcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .rpos{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;min-width:36px;text-align:center;color:var(--muted)}
+    .rpos.gold{color:#C9A84C}.rpos.silver{color:#9E9E9E}.rpos.bronze{color:#A0522D}.rpos.danger{color:var(--red)}
+    .rbar{height:5px;background:#F2E8DF;border-radius:4px;margin-top:5px;overflow:hidden}
+    .rbar-fill{height:100%;border-radius:4px}
+
+    /* USUARIOS */
+    .uform{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:18px}
+    .uform h3{font-size:14px;font-weight:600;margin-bottom:16px}
+    .ufield{margin-bottom:12px}
+    .ufield label{font-size:12px;font-weight:500;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+    .uinput{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#FDFAF7;outline:none;transition:border-color .2s}
+    .uinput:focus{border-color:var(--red)}
+    .uinput.ok{border-color:var(--green)}.uinput.err{border-color:var(--red)}
+    .uinput-wrap{position:relative}
+    .uinput-wrap .uinput{padding-right:44px}
+    .ueye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:4px;line-height:1}
+    .umsg{font-size:11px;margin-top:4px}
+    .alert-err{display:none;background:#FDEDEC;border:1px solid #F5C6C0;color:#922B21;font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:10px}
+    .alert-ok{display:none;background:#EAFAF1;border:1px solid #A3D9B5;color:#1E7A40;font-size:13px;padding:9px 13px;border-radius:8px;margin-bottom:10px}
+    .ubtn{padding:11px 18px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;width:100%;margin-top:4px}
+    .ubtn:hover{opacity:.88}
+    .ulist{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px}
+    .ulist h3{font-size:14px;font-weight:600;margin-bottom:14px}
+    .urow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F2E8DF}
+    .urow:last-child{border-bottom:none}
+    .utag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:3px;display:inline-block}
+    .delbtn{background:none;border:1px solid #F5C6C0;color:#922B21;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .delbtn:hover{background:#FDEDEC}
+
+    @media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.rgrid{grid-template-columns:1fr}}
+    @media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.content{padding:12px}}
+  </style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="lc">
+    <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" alt="Ital'in House"/>
+    <h2>Painel Administrativo</h2>
+    <p>Sistema de avaliações NPS</p>
+    <div class="lf">
+      <input class="li" type="email" id="lEmail" placeholder="E-mail" autocomplete="email"/>
+    </div>
+    <div class="lf">
+      <input class="li" type="password" id="lPass" placeholder="Senha" autocomplete="current-password"/>
+      <button type="button" class="eye" id="eyeBtn">👁</button>
+    </div>
+    <button class="lbtn" id="loginBtn">Entrar</button>
+    <div class="lerr" id="lErr">E-mail ou senha incorretos.</div>
+  </div>
+</div>
+
+<div id="dashboard">
+  <nav class="topbar">
+    <div class="tl">
+      <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" alt=""/>
+      <span>Painel NPS</span>
+      <span class="badge">ADMIN</span>
+    </div>
+    <button class="outbtn" id="outBtn">Sair</button>
+  </nav>
+  <div class="content">
+    <div class="tabs">
+      <div class="tab active" data-tab="aval">📋 Avaliações</div>
+      <div class="tab" data-tab="rank">🏆 Ranking</div>
+      <div class="tab" data-tab="lojas">📊 Por Loja</div>
+      <div class="tab" data-tab="links">🔗 Links (68)</div>
+      <div class="tab" data-tab="users">👥 Usuários</div>
+    </div>
+
+    <!-- AVALIAÇÕES -->
+    <div id="tabAval">
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-lbl">Total</div><div class="kpi-val" id="kTotal">—</div></div>
+        <div class="kpi"><div class="kpi-lbl">NPS Geral</div><div class="kpi-val r" id="kNPS">—</div><div class="kpi-sub">% prom − % detr</div></div>
+        <div class="kpi"><div class="kpi-lbl">Média</div><div class="kpi-val g" id="kMedia">—</div><div class="kpi-sub">de 0 a 10</div></div>
+        <div class="kpi"><div class="kpi-lbl">Hoje</div><div class="kpi-val" id="kHoje">—</div><div class="kpi-sub">últimas 24h</div></div>
+        <div class="kpi"><div class="kpi-lbl">Lojas ativas</div><div class="kpi-val" id="kLojas">—</div></div>
+      </div>
+      <div class="nps-bar-wrap">
+        <h3>Distribuição NPS</h3>
+        <div class="nps-bar">
+          <div class="ns d" id="segD" style="flex:33">Det.</div>
+          <div class="ns p" id="segP" style="flex:33">Pas.</div>
+          <div class="ns pr" id="segPr" style="flex:34">Pro.</div>
+        </div>
+        <div class="nps-lgd">
+          <span><span class="dot" style="background:var(--red)"></span>Detratores 0–6</span>
+          <span><span class="dot" style="background:var(--yellow)"></span>Passivos 7–8</span>
+          <span><span class="dot" style="background:var(--green)"></span>Promotores 9–10</span>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="acwrap">
+          <input class="fi" type="text" id="fLoja" placeholder="🔍 Buscar loja..." autocomplete="off"/>
+          <div class="acdrop" id="acDrop"></div>
+        </div>
+        <select class="fi" id="fNPS">
+          <option value="">Todos os perfis</option>
+          <option value="p">Promotores (9–10)</option>
+          <option value="n">Passivos (7–8)</option>
+          <option value="d">Detratores (0–6)</option>
+        </select>
+        <select class="fi" id="fPer">
+          <option value="">Todo período</option>
+          <option value="7">7 dias</option>
+          <option value="30">30 dias</option>
+          <option value="90">90 dias</option>
+        </select>
+        <button class="act-btn" id="btnCSV">⬇ CSV</button>
+        <button class="act-btn r" id="btnPDF">🖨 PDF</button>
+      </div>
+      <div class="twrap">
+        <div class="loading" id="tLoading">Carregando avaliações...</div>
+        <table id="avalTable" style="display:none">
+          <thead><tr>
+            <th data-col="criadoEm">Data ↕</th>
+            <th data-col="lojaNome">Loja ↕</th>
+            <th data-col="score">Nota ↕</th>
+            <th>Perfil</th><th>Classificação</th><th>Comentário</th>
+          </tr></thead>
+          <tbody id="tBody"></tbody>
+        </table>
+        <div class="empty" id="tEmpty" style="display:none">Nenhuma avaliação encontrada.</div>
+      </div>
+    </div>
+
+    <!-- RANKING -->
+    <div id="tabRank" style="display:none">
+      <div class="rgrid" id="rankWrap"><div class="loading">Carregando...</div></div>
+    </div>
+
+    <!-- POR LOJA -->
+    <div id="tabLojas" style="display:none">
+      <div class="filters">
+        <input class="fi" type="text" id="fLT" placeholder="🔍 Buscar loja..." style="flex:1;min-width:170px"/>
+        <select class="fi" id="fUF"><option value="">Todos UF</option></select>
+        <select class="fi" id="fNT"><option value="">Todos NPS</option><option value="bom">Bom ≥50</option><option value="med">Médio 0–49</option><option value="ruim">Negativo</option><option value="sem">Sem avaliações</option></select>
+        <span id="lCount" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
+      </div>
+      <div class="twrap">
+        <div class="loading" id="lLoading">Calculando...</div>
+        <table id="lTable" style="display:none">
+          <thead><tr><th>Loja</th><th>UF</th><th>Avals.</th><th>Média</th><th>NPS</th><th>Prom.</th><th>Pass.</th><th>Detr.</th></tr></thead>
+          <tbody id="lBody"></tbody>
+        </table>
+        <div class="empty" id="lEmpty" style="display:none">Nenhuma loja encontrada.</div>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div id="tabLinks" style="display:none">
+      <div class="filters">
+        <input class="fi" type="text" id="fLink" placeholder="🔍 Buscar loja..." style="flex:1;min-width:190px"/>
+        <select class="fi" id="fEst"><option value="">Todos estados</option></select>
+        <button class="act-btn" id="btnCopyAll">📋 Copiar todos</button>
+        <button class="act-btn" id="btnLinksCSV">⬇ CSV</button>
+        <span id="linkCount" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
+      </div>
+      <div class="twrap">
+        <table id="linksTable">
+          <thead><tr><th>#</th><th>Loja</th><th>UF</th><th>ID</th><th>Link NPS</th><th>Desempenho</th><th>Ações</th></tr></thead>
+          <tbody id="linksBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- USUARIOS -->
+    <div id="tabUsers" style="display:none">
+      <div style="max-width:620px">
+        <div class="uform">
+          <h3>➕ Cadastrar novo usuário</h3>
+          <div class="alert-err" id="uErr"></div>
+          <div class="alert-ok" id="uOk"></div>
+          <div class="ufield">
+            <label>E-mail <span style="color:var(--red)">*</span></label>
+            <div class="uinput-wrap">
+              <input type="email" class="uinput" id="uEmail" placeholder="nome@italinhouse.com"/>
+            </div>
+            <div class="umsg" id="uEmailMsg" style="color:var(--muted)">Somente @italinhouse.com é permitido</div>
+          </div>
+          <div class="ufield">
+            <label>Senha <span style="color:var(--red)">*</span></label>
+            <div class="uinput-wrap">
+              <input type="password" class="uinput" id="uPass" placeholder="Mínimo 8 caracteres"/>
+              <button type="button" class="ueye" id="uEye">👁</button>
+            </div>
+          </div>
+          <div class="ufield">
+            <label>Confirmar senha <span style="color:var(--red)">*</span></label>
+            <input type="password" class="uinput" id="uPass2" placeholder="Repita a senha"/>
+          </div>
+          <button class="ubtn" id="uBtn">➕ Cadastrar usuário</button>
+        </div>
+        <div class="ulist">
+          <h3>👥 Usuários cadastrados</h3>
+          <div id="uListWrap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// CONFIGURAÇÃO
+// ══════════════════════════════════════════════════════
+var FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCInytAdn5ly8DvqwLUvEFXsfQcP0YXyd4",
+  authDomain: "italinhouse-nps.firebaseapp.com",
+  projectId: "italinhouse-nps",
+  storageBucket: "italinhouse-nps.firebasestorage.app",
+  messagingSenderId: "968639332938",
+  appId: "1:968639332938:web:d47cda07386bbb645d9cb3"
+};
+
+var BASE_URL = "https://italinhouse.github.io/italin-nps-v2/";
+
+var ADMIN_USERS = {
+  "dante@italinhouse.com": "Italinhouse@2026",
+  "lucasprimo@italinhouse.com": "Italinhouse@2026",
+  "wesleymonteiro@italinhouse.com": "Italinhouse@2026"
+};
+
+var LOJAS = [
+  {id:"GO001",nome:"Ital'in House - Goiânia - Jardim América",uf:"GO"},
+  {id:"SP002",nome:"Ital'in House - Ribeirão Pires - Centro",uf:"SP"},
+  {id:"SP003",nome:"Ital'in House - Santo André - Parque Marajoara",uf:"SP"},
+  {id:"SP004",nome:"Ital'in House - Guarujá - Pitangueiras",uf:"SP"},
+  {id:"RJ005",nome:"Ital'in House - Rio de Janeiro - Barra da Tijuca",uf:"RJ"},
+  {id:"SP006",nome:"Ital'in House - São Paulo - Campo Limpo",uf:"SP"},
+  {id:"SP007",nome:"Ital'in House - Barretos - Aeroporto",uf:"SP"},
+  {id:"MS008",nome:"Ital'in House - Dourados - Jardim Caramuru",uf:"MS"},
+  {id:"MT009",nome:"Ital'in House - Rondonópolis - Coophalis",uf:"MT"},
+  {id:"MG010",nome:"Ital'in House - Uberlândia - Saraiva",uf:"MG"},
+  {id:"SP011",nome:"Ital'in House - São Paulo - São Mateus",uf:"SP"},
+  {id:"PR012",nome:"Ital'in House - Ponta Grossa - Centro",uf:"PR"},
+  {id:"MS013",nome:"Ital'in House - Campo Grande - Jardim dos Estados",uf:"MS"},
+  {id:"MG014",nome:"Ital'in House - Governador Valadares - Centro",uf:"MG"},
+  {id:"SP015",nome:"Ital'in House - São José dos Campos - Bosque dos Eucaliptos",uf:"SP"},
+  {id:"SP016",nome:"Ital'in House - Piracicaba - Cidade Alta",uf:"SP"},
+  {id:"SP017",nome:"Ital'in House - Olímpia - Patrimônio de São João Batista",uf:"SP"},
+  {id:"SP018",nome:"Ital'in House - São Paulo - Vila Matilde",uf:"SP"},
+  {id:"SP019",nome:"Ital'in House - São Paulo - Jabaquara",uf:"SP"},
+  {id:"MT020",nome:"Ital'in House - Cuiabá - Areão",uf:"MT"},
+  {id:"SP021",nome:"Ital'in House - Barueri - Alphaville",uf:"SP"},
+  {id:"SP022",nome:"Ital'in House - Mogi das Cruzes - Centro",uf:"SP"},
+  {id:"SP023",nome:"Ital'in House - São Paulo - São Miguel",uf:"SP"},
+  {id:"SP024",nome:"Ital'in House - Jacareí - Loteamento Villa Branca",uf:"SP"},
+  {id:"PR025",nome:"Ital'in House - Araucária - Centro",uf:"PR"},
+  {id:"DF026",nome:"Ital'in House - Brasília - Setor Sudoeste",uf:"DF"},
+  {id:"SP027",nome:"Ital'in House - Taubaté - Centro",uf:"SP"},
+  {id:"MG028",nome:"Ital'in House - Ituiutaba - Centro",uf:"MG"},
+  {id:"ES029",nome:"Ital'in House - Vitória - ES",uf:"ES"},
+  {id:"SP030",nome:"Ital'in House - São Paulo - Vila Madalena",uf:"SP"},
+  {id:"SP031",nome:"Ital'in House - Carapicuíba",uf:"SP"},
+  {id:"SP032",nome:"Ital'in House - São Paulo - Taboão da Serra",uf:"SP"},
+  {id:"SP033",nome:"Ital'in House - Araçatuba - Higienópolis",uf:"SP"},
+  {id:"SP034",nome:"Italin House Macarrão Gourmet - Pindamonhangaba",uf:"SP"},
+  {id:"SP035",nome:"Ital'in House - Limeira - SP",uf:"SP"},
+  {id:"SP036",nome:"Ital'in House - Itapevi - Jardim Santa Rita",uf:"SP"},
+  {id:"SC037",nome:"Ital'in House - Joinville - Santo Antônio",uf:"SC"},
+  {id:"MT038",nome:"Ital'in House - Sinop - Setor Residencial Norte",uf:"MT"},
+  {id:"RS039",nome:"Ital'in House - Canoas",uf:"RS"},
+  {id:"SP040",nome:"Ital'in House - Votuporanga - Santa Eliza",uf:"SP"},
+  {id:"SP041",nome:"Ital'in House - Birigui",uf:"SP"},
+  {id:"SP042",nome:"Ital'in House - São Paulo - Rio Claro",uf:"SP"},
+  {id:"AL043",nome:"Ital'in House - Maceió - Pajuçara",uf:"AL"},
+  {id:"PI044",nome:"Ital'in House - Teresina - Ininga",uf:"PI"},
+  {id:"SP045",nome:"Ital'in House - São Bernardo do Campo - Rudge Ramos",uf:"SP"},
+  {id:"SP046",nome:"Ital'in House - Praia Grande",uf:"SP"},
+  {id:"MG047",nome:"Ital'in House - Betim - Inga Alto",uf:"MG"},
+  {id:"RS048",nome:"Ital'in House - Esteio - Centro",uf:"RS"},
+  {id:"SP049",nome:"Ital'in House - São Paulo - Freguesia do Ó",uf:"SP"},
+  {id:"SP050",nome:"Ital'in House - Botucatu - Centro",uf:"SP"},
+  {id:"SP051",nome:"Ital'in House - São Paulo - Vila Mariana",uf:"SP"},
+  {id:"SP052",nome:"Ital'in House - Osasco - Baronesa",uf:"SP"},
+  {id:"SP053",nome:"Ital'in House - Itupeva - Lagoa",uf:"SP"},
+  {id:"SP054",nome:"Ital'in House - São Vicente - Centro",uf:"SP"},
+  {id:"PI055",nome:"Ital'in House - Parnaíba",uf:"PI"},
+  {id:"MG056",nome:"Italin House BH - Buritis",uf:"MG"},
+  {id:"SC057",nome:"Ital'in House - Itajaí - Centro",uf:"SC"},
+  {id:"SP058",nome:"Ital'in House - São Paulo - Anália Franco",uf:"SP"},
+  {id:"SP059",nome:"Ital'in House - Matão - Centro",uf:"SP"},
+  {id:"SP060",nome:"Ital'in House - Fernandópolis - Centro",uf:"SP"},
+  {id:"SP061",nome:"Ital'in House - São Paulo - Mooca",uf:"SP"},
+  {id:"SP062",nome:"Ital'in House - São José do Rio Preto",uf:"SP"},
+  {id:"SP063",nome:"Italin House - Araras",uf:"SP"},
+  {id:"MG064",nome:"Ital'in House - Araxá - Centro",uf:"MG"},
+  {id:"SP065",nome:"Ital'in House - Andradina - Centro",uf:"SP"},
+  {id:"SP066",nome:"Ital'in House - Jundiaí - Jardim São Miguel",uf:"SP"},
+  {id:"RJ067",nome:"Ital'in House - Rio de Janeiro - Copacabana",uf:"RJ"},
+  {id:"SP068",nome:"Ital'in House - Leme - Centro",uf:"SP"}
+];
+
+// ══════════════════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════════════════
+var allData = [];
+var filteredData = [];
+var sortCol = "criadoEm";
+var sortAsc = false;
+var selectedLoja = null;
+
+// ══════════════════════════════════════════════════════
+// UTILITÁRIOS
+// ══════════════════════════════════════════════════════
+function makeLink(l) {
+  return BASE_URL + "?loja=" + encodeURIComponent(l.id) + "&nome=" + encodeURIComponent(l.nome);
+}
+function today() { return new Date().toISOString().slice(0,10); }
+function fmtDate(d) {
+  if (!d || !d.toDate) return "—";
+  return d.toDate().toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+}
+function dlCSV(rows, name) {
+  var csv = rows.map(function(r){ return r.map(function(v){ return '"'+String(v).replace(/"/g,'""')+'"'; }).join(","); }).join("\n");
+  var a = document.createElement("a");
+  a.href = "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(csv);
+  a.download = name; a.click();
+}
+function classif(t) {
+  if (!t) return null;
+  var s = t.toLowerCase();
+  var q = ["comida","massa","molho","sabor","gosto","frio","quente","cru","porção","prato","ingrediente","tempero","macarrão","frango","carne","queijo","ruim","péssimo"];
+  var a = ["atendimento","garçom","garçonete","funcionário","entregador","delivery","entrega","demorou","demora","grosseiro","educado","motoboy"];
+  var e = ["ótimo","excelente","perfeito","adorei","amei","incrível","maravilhoso","parabéns","recomendo","top","sensacional","muito bom","gostei","voltarei","demais"];
+  var hq = q.some(function(p){return s.includes(p);});
+  var ha = a.some(function(p){return s.includes(p);});
+  var he = e.some(function(p){return s.includes(p);});
+  if (hq && ha) return "qual+aten";
+  if (hq) return "qualidade";
+  if (ha) return "atendimento";
+  if (he) return "elogio";
+  return null;
+}
+function classifBadge(c) {
+  if (!c) return '<span style="opacity:.4;font-size:12px">—</span>';
+  var m = {"elogio":["#EAFAF1","#1E7A40","⭐ Elogio"],"qualidade":["#FDEDEC","#922B21","🍝 Qualidade"],"atendimento":["#FEF9E7","#7D6608","👤 Atendimento"],"qual+aten":["#FDEDEC","#922B21","⚠️ Qual+Aten"]};
+  var x = m[c] || ["#F5EDE3","#7A5A50",c];
+  return '<span class="ctag" style="background:'+x[0]+';color:'+x[1]+'">'+x[2]+'</span>';
+}
+function getLojaStats(id) {
+  var r = allData.filter(function(d){return d.lojaId===id;});
+  if (!r.length) return null;
+  var t=r.length, pr=r.filter(function(d){return d.score>=9;}).length, de=r.filter(function(d){return d.score<=6;}).length;
+  return {total:t, nps:Math.round(((pr-de)/t)*100), avg:(r.reduce(function(s,d){return s+d.score;},0)/t).toFixed(1)};
+}
+
+// ══════════════════════════════════════════════════════
+// KPIs
+// ══════════════════════════════════════════════════════
+function renderKPIs(data) {
+  var t=data.length;
+  var pr=data.filter(function(d){return d.score>=9;}).length;
+  var pa=data.filter(function(d){return d.score>=7&&d.score<=8;}).length;
+  var de=data.filter(function(d){return d.score<=6;}).length;
+  var nps=t?Math.round(((pr-de)/t)*100):0;
+  var avg=t?(data.reduce(function(s,d){return s+d.score;},0)/t).toFixed(1):"—";
+  var now=Date.now();
+  var hoje=data.filter(function(d){if(!d.criadoEm)return false;var ts=d.criadoEm.toDate?d.criadoEm.toDate().getTime():0;return(now-ts)<86400000;}).length;
+  var lojas=new Set(data.map(function(d){return d.lojaId;})).size;
+  document.getElementById("kTotal").textContent=t;
+  document.getElementById("kNPS").textContent=(nps>0?"+":"")+nps;
+  document.getElementById("kMedia").textContent=avg;
+  document.getElementById("kHoje").textContent=hoje;
+  document.getElementById("kLojas").textContent=lojas;
+  var dp=t?(de/t)*100:33, pp=t?(pa/t)*100:33, prp=t?(pr/t)*100:34;
+  document.getElementById("segD").style.flex=dp;
+  document.getElementById("segP").style.flex=pp;
+  document.getElementById("segPr").style.flex=prp;
+  document.getElementById("segD").textContent=dp>8?Math.round(dp)+"%":"";
+  document.getElementById("segP").textContent=pp>8?Math.round(pp)+"%":"";
+  document.getElementById("segPr").textContent=prp>8?Math.round(prp)+"%":"";
+}
+
+// ══════════════════════════════════════════════════════
+// TABELA AVALIAÇÕES
+// ══════════════════════════════════════════════════════
+function renderAval() {
+  var fl=document.getElementById("fLoja").value.toLowerCase();
+  var fn=document.getElementById("fNPS").value;
+  var fp=document.getElementById("fPer").value;
+  var now=Date.now();
+  var data=allData.slice();
+  if (selectedLoja) data=data.filter(function(d){return d.lojaId===selectedLoja.id;});
+  else if (fl) data=data.filter(function(d){return (d.lojaNome||d.lojaId||"").toLowerCase().includes(fl);});
+  if (fn==="p") data=data.filter(function(d){return d.score>=9;});
+  if (fn==="n") data=data.filter(function(d){return d.score>=7&&d.score<=8;});
+  if (fn==="d") data=data.filter(function(d){return d.score<=6;});
+  if (fp) { var days=Number(fp); data=data.filter(function(d){if(!d.criadoEm)return true;var ts=d.criadoEm.toDate?d.criadoEm.toDate().getTime():0;return(now-ts)<days*86400000;}); }
+  renderKPIs(data);
+  filteredData=data;
+  data=data.slice().sort(function(a,b){
+    var va=a[sortCol], vb=b[sortCol];
+    if (sortCol==="criadoEm"){va=va&&va.toDate?va.toDate().getTime():0;vb=vb&&vb.toDate?vb.toDate().getTime():0;}
+    return sortAsc?(va<vb?-1:va>vb?1:0):(va>vb?-1:va<vb?1:0);
+  });
+  document.getElementById("tLoading").style.display="none";
+  if (!data.length) { document.getElementById("avalTable").style.display="none"; document.getElementById("tEmpty").style.display="block"; return; }
+  document.getElementById("avalTable").style.display="table";
+  document.getElementById("tEmpty").style.display="none";
+  var html="";
+  data.forEach(function(d){
+    var type=d.score>=9?"promoter":d.score>=7?"passive":"detractor";
+    var lbl=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";
+    var cl=classif(d.comment);
+    html+="<tr><td style='color:var(--muted);font-size:12px'>"+fmtDate(d.criadoEm)+"</td><td><strong>"+(d.lojaNome||d.lojaId||"—")+"</strong></td><td><span class='pill "+type+"'>"+d.score+"</span></td><td><span class='ntag "+type+"'>"+lbl+"</span></td><td>"+classifBadge(cl)+"</td><td><div class='comment-c' title='"+(d.comment||"")+"'>"+(d.comment||"<span style='opacity:.4'>sem comentário</span>")+"</div></td></tr>";
+  });
+  document.getElementById("tBody").innerHTML=html;
+}
+
+// ══════════════════════════════════════════════════════
+// RANKING
+// ══════════════════════════════════════════════════════
+function renderRank() {
+  var lojas=LOJAS.map(function(l){
+    var r=allData.filter(function(d){return d.lojaId===l.id;});
+    if (!r.length) return null;
+    var t=r.length, pr=r.filter(function(d){return d.score>=9;}).length, de=r.filter(function(d){return d.score<=6;}).length;
+    return {nome:l.nome,uf:l.uf,total:t,nps:Math.round(((pr-de)/t)*100),avg:(r.reduce(function(s,d){return s+d.score;},0)/t).toFixed(1)};
+  }).filter(Boolean).sort(function(a,b){return b.nps-a.nps;});
+  function card(l,pos,cls){
+    var nc=l.nps>=50?"var(--green)":l.nps>=0?"var(--yellow)":"var(--red)";
+    var bw=Math.max(0,Math.min(100,((l.nps+100)/200)*100));
+    return "<div class='rcard'><div class='rpos "+cls+"'>#"+pos+"</div><div style='flex:1;min-width:0'><div style='font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis'>"+l.nome+"</div><div style='font-size:11px;color:var(--muted);margin-top:2px'>"+l.total+" aval · Média "+l.avg+"</div><div class='rbar'><div class='rbar-fill' style='width:"+bw+"%;background:"+nc+"'></div></div></div><div style='text-align:right;min-width:56px'><div style='font-size:19px;font-weight:700;font-family:Playfair Display,serif;color:"+nc+"'>"+(l.nps>0?"+":"")+l.nps+"</div><div style='font-size:11px;color:var(--muted)'>NPS</div></div></div>";
+  }
+  var top=lojas.slice(0,5), bot=lojas.slice().reverse().slice(0,5);
+  var cls=["gold","silver","bronze","",""];
+  document.getElementById("rankWrap").innerHTML=
+    "<div class='rsec'><h3>🏆 Destaques <span style='font-size:11px;font-weight:400;color:var(--muted)'>(maior NPS)</span></h3>"+(top.length?top.map(function(l,i){return card(l,i+1,cls[i]);}).join(""):"<p style='color:var(--muted);font-size:13px'>Sem dados.</p>")+"</div>"+
+    "<div class='rsec'><h3>⚠️ Atenção <span style='font-size:11px;font-weight:400;color:var(--muted)'>(menor NPS)</span></h3>"+(bot.length?bot.map(function(l,i){return card(l,lojas.length-i,"danger");}).join(""):"<p style='color:var(--muted);font-size:13px'>Sem dados.</p>")+"</div>";
+}
+
+// ══════════════════════════════════════════════════════
+// POR LOJA
+// ══════════════════════════════════════════════════════
+function renderLojas() {
+  var fl=document.getElementById("fLT").value.toLowerCase();
+  var fuf=document.getElementById("fUF").value;
+  var fn=document.getElementById("fNT").value;
+  var data=LOJAS.map(function(l){
+    var r=allData.filter(function(d){return d.lojaId===l.id;});
+    if (!r.length) return {nome:l.nome,uf:l.uf,total:0,pr:0,pa:0,de:0,nps:null,avg:null};
+    var t=r.length,pr=r.filter(function(d){return d.score>=9;}).length,pa=r.filter(function(d){return d.score>=7&&d.score<=8;}).length,de=r.filter(function(d){return d.score<=6;}).length;
+    return {nome:l.nome,uf:l.uf,total:t,pr:pr,pa:pa,de:de,nps:Math.round(((pr-de)/t)*100),avg:(r.reduce(function(s,d){return s+d.score;},0)/t).toFixed(1)};
+  });
+  if (fl) data=data.filter(function(l){return l.nome.toLowerCase().includes(fl);});
+  if (fuf) data=data.filter(function(l){return l.uf===fuf;});
+  if (fn==="bom") data=data.filter(function(l){return l.nps!==null&&l.nps>=50;});
+  if (fn==="med") data=data.filter(function(l){return l.nps!==null&&l.nps>=0&&l.nps<50;});
+  if (fn==="ruim") data=data.filter(function(l){return l.nps!==null&&l.nps<0;});
+  if (fn==="sem") data=data.filter(function(l){return l.total===0;});
+  document.getElementById("lLoading").style.display="none";
+  document.getElementById("lCount").textContent=data.length+" lojas";
+  if (!data.length){document.getElementById("lTable").style.display="none";document.getElementById("lEmpty").style.display="block";return;}
+  document.getElementById("lTable").style.display="table";
+  document.getElementById("lEmpty").style.display="none";
+  var html="";
+  data.forEach(function(l){
+    var nc=l.nps===null?"var(--muted)":l.nps>=50?"var(--green)":l.nps>=0?"var(--yellow)":"var(--red)";
+    var nT=l.nps===null?"<span style='opacity:.4'>—</span>":(l.nps>0?"+":"")+l.nps;
+    html+="<tr><td><strong>"+l.nome+"</strong></td><td><span class='sb'>"+l.uf+"</span></td><td>"+(l.total||"<span style='opacity:.4'>0</span>")+"</td><td>"+(l.avg||"<span style='opacity:.4'>—</span>")+"</td><td style='font-weight:600;color:"+nc+"'>"+nT+"</td><td style='color:var(--green)'>"+l.pr+"</td><td style='color:var(--yellow)'>"+l.pa+"</td><td style='color:var(--red)'>"+l.de+"</td></tr>";
+  });
+  document.getElementById("lBody").innerHTML=html;
+}
+
+// ══════════════════════════════════════════════════════
+// LINKS
+// ══════════════════════════════════════════════════════
+function renderLinks() {
+  var fl=document.getElementById("fLink").value.toLowerCase();
+  var fe=document.getElementById("fEst").value;
+  var lojas=LOJAS.filter(function(l){
+    if (fl&&!l.nome.toLowerCase().includes(fl)&&!l.id.toLowerCase().includes(fl)) return false;
+    if (fe&&l.uf!==fe) return false;
+    return true;
+  });
+  document.getElementById("linkCount").textContent=lojas.length+" de "+LOJAS.length;
+  var html="";
+  lojas.forEach(function(l,i){
+    var link=makeLink(l);
+    var s=getLojaStats(l.id);
+    var sH=s?"<span style='font-size:12px;color:var(--muted)'>"+s.total+" aval.</span> <span class='nmini "+(s.nps>=50?"g":s.nps>=0?"w":"n")+"'>"+(s.nps>0?"+":"")+s.nps+" NPS</span>":"<span class='nmini n'>Sem avaliações</span>";
+    var msg=encodeURIComponent("Avalie sua experiência na "+l.nome+": "+link);
+    html+="<tr><td style='color:var(--muted);font-size:12px'>"+(i+1)+"</td><td><strong style='font-size:13px'>"+l.nome+"</strong></td><td><span class='sb'>"+l.uf+"</span></td><td style='font-family:monospace;font-size:12px;color:var(--muted)'>"+l.id+"</td><td><span class='lnk' title='"+link+"'>"+link+"</span></td><td>"+sH+"</td><td><div style='display:flex;gap:6px'><button class='cpbtn' data-link='"+link+"'>📋 Copiar</button><a class='wabtn' href='https://wa.me/?text="+msg+"' target='_blank'>💬 WA</a></div></td></tr>";
+  });
+  document.getElementById("linksBody").innerHTML=html;
+  document.querySelectorAll(".cpbtn").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      navigator.clipboard.writeText(btn.getAttribute("data-link")).then(function(){
+        btn.textContent="✓ Copiado!";btn.classList.add("ok");
+        setTimeout(function(){btn.textContent="📋 Copiar";btn.classList.remove("ok");},2000);
+      });
+    });
+  });
+}
+
+// ══════════════════════════════════════════════════════
+// USUÁRIOS
+// ══════════════════════════════════════════════════════
+var UK="italin_nps_users";
+function getStoredUsers(){try{return JSON.parse(localStorage.getItem(UK)||"{}");}catch(e){return{};}}
+function saveUsers(u){localStorage.setItem(UK,JSON.stringify(u));}
+function getAllUsers(){return Object.assign({},ADMIN_USERS,getStoredUsers());}
+
+function renderUserList() {
+  var all=getAllUsers(), stored=getStoredUsers();
+  var emails=Object.keys(all).sort();
+  var html="";
+  emails.forEach(function(em){
+    var fixed=!!ADMIN_USERS[em];
+    var tagBg=fixed?"#FEF9E7":"#EAFAF1", tagC=fixed?"#7D6608":"#1E7A40", tagT=fixed?"PADRÃO":"CADASTRADO";
+    html+="<div class='urow'><div style='display:flex;align-items:center;gap:10px'><span style='font-size:20px'>👤</span><div><div style='font-size:13px;font-weight:500'>"+em+"</div><span class='utag' style='background:"+tagBg+";color:"+tagC+"'>"+tagT+"</span></div></div>"+(fixed?"":"<button class='delbtn' data-em='"+em+"'>🗑 Remover</button>")+"</div>";
+  });
+  html+="<div style='font-size:11px;color:var(--muted);margin-top:10px'>"+emails.length+" usuário"+(emails.length!==1?"s":"")+"</div>";
+  document.getElementById("uListWrap").innerHTML=html;
+  document.querySelectorAll(".delbtn").forEach(function(b){
+    b.addEventListener("click",function(){
+      var em=b.getAttribute("data-em");
+      if (!confirm("Remover "+em+"?")) return;
+      var u=getStoredUsers(); delete u[em]; saveUsers(u); renderUserList();
+    });
+  });
+}
+
+function setupUsers() {
+  // Validar email
+  document.getElementById("uEmail").addEventListener("input",function(){
+    var v=this.value.trim();
+    var msg=document.getElementById("uEmailMsg");
+    if (!v){this.className="uinput";msg.textContent="Somente @italinhouse.com é permitido";msg.style.color="var(--muted)";}
+    else if (v.endsWith("@italinhouse.com")&&v.length>16){this.className="uinput ok";msg.textContent="✅ E-mail válido";msg.style.color="var(--green)";}
+    else{this.className="uinput err";msg.textContent="❌ Apenas @italinhouse.com";msg.style.color="var(--red)";}
+  });
+  // Toggle senha
+  document.getElementById("uEye").addEventListener("click",function(){
+    var i=document.getElementById("uPass");
+    i.type=i.type==="password"?"text":"password";
+    this.textContent=i.type==="password"?"👁":"🙈";
+  });
+  // Cadastrar
+  document.getElementById("uBtn").addEventListener("click",function(){
+    var em=document.getElementById("uEmail").value.trim().toLowerCase();
+    var pw=document.getElementById("uPass").value;
+    var pw2=document.getElementById("uPass2").value;
+    var eDiv=document.getElementById("uErr"), oDiv=document.getElementById("uOk");
+    eDiv.style.display="none"; oDiv.style.display="none";
+    if (!em) return show("uErr","Digite o e-mail.");
+    if (!em.endsWith("@italinhouse.com")) return show("uErr","❌ Apenas @italinhouse.com é permitido.");
+    if (pw.length<8) return show("uErr","Senha deve ter pelo menos 8 caracteres.");
+    if (pw!==pw2) return show("uErr","Senhas não coincidem.");
+    var all=getAllUsers();
+    if (all[em]) return show("uErr","E-mail já cadastrado.");
+    var u=getStoredUsers(); u[em]=pw; saveUsers(u);
+    document.getElementById("uEmail").value="";
+    document.getElementById("uPass").value="";
+    document.getElementById("uPass2").value="";
+    document.getElementById("uEmail").className="uinput";
+    document.getElementById("uEmailMsg").textContent="Somente @italinhouse.com é permitido";
+    document.getElementById("uEmailMsg").style.color="var(--muted)";
+    show("uOk","✅ Usuário "+em+" cadastrado!");
+    renderUserList();
+  });
+  function show(id,msg){var el=document.getElementById(id);el.textContent=msg;el.style.display="block";}
+}
+
+// ══════════════════════════════════════════════════════
+// EXPORTAR
+// ══════════════════════════════════════════════════════
+function exportCSV() {
+  var data=filteredData.length?filteredData:allData;
+  var rows=[["Data","Loja","ID","Nota","Perfil","Classificação","Comentário"]];
+  data.forEach(function(d){
+    var type=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";
+    rows.push([fmtDate(d.criadoEm),d.lojaNome||"",d.lojaId||"",d.score,type,classif(d.comment)||"",(d.comment||"").replace(/,/g,";")]);
+  });
+  dlCSV(rows,"nps_"+today()+".csv");
+}
+function exportPDF() {
+  var data=filteredData.length?filteredData:allData;
+  if (!data.length){alert("Sem dados para exportar.");return;}
+  var titulo=selectedLoja?"NPS — "+selectedLoja.nome:"Relatório NPS — Ital'in House";
+  var t=data.length, pr=data.filter(function(d){return d.score>=9;}).length, pa=data.filter(function(d){return d.score>=7&&d.score<=8;}).length, de=data.filter(function(d){return d.score<=6;}).length;
+  var nps=t?Math.round(((pr-de)/t)*100):0;
+  var avg=t?(data.reduce(function(s,d){return s+d.score;},0)/t).toFixed(1):"—";
+  var nc=nps>=50?"#27AE60":nps>=0?"#F39C12":"#C0392B";
+  var rows=data.map(function(d){var type=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";return "<tr><td>"+fmtDate(d.criadoEm)+"</td><td>"+(d.lojaNome||"—")+"</td><td style='text-align:center;font-weight:bold'>"+d.score+"</td><td>"+type+"</td><td>"+(d.comment||"")+"</td></tr>";}).join("");
+  var w=window.open("","_blank");
+  w.document.write('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>'+titulo+'</title><style>body{font-family:Arial,sans-serif;margin:28px;color:#1A0A05}h1{color:#C0392B;font-size:19px;margin-bottom:3px}.sub{color:#7A5A50;font-size:12px;margin-bottom:20px}.kpis{display:flex;gap:14px;margin-bottom:20px}.kpi{background:#FDF6EE;border:1px solid #E8D5C4;border-radius:8px;padding:11px 18px;text-align:center}.kv{font-size:26px;font-weight:bold;color:#C0392B}.kl{font-size:10px;color:#7A5A50;text-transform:uppercase}table{width:100%;border-collapse:collapse;font-size:12px}th{background:#C0392B;color:#fff;padding:7px 9px;text-align:left}td{padding:6px 9px;border-bottom:1px solid #F2E8DF}tr:nth-child(even) td{background:#FDF8F3}</style></head><body>');
+  w.document.write('<h1>🍝 '+titulo+'</h1><div class="sub">'+new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"})+' · '+t+' avaliação'+(t!==1?"ões":"")+'</div>');
+  w.document.write('<div class="kpis"><div class="kpi"><div class="kv">'+t+'</div><div class="kl">Total</div></div><div class="kpi"><div class="kv" style="color:'+nc+'">'+(nps>0?"+":"")+nps+'</div><div class="kl">NPS</div></div><div class="kpi"><div class="kv" style="color:#27AE60">'+avg+'</div><div class="kl">Média</div></div><div class="kpi"><div class="kv" style="color:#27AE60">'+pr+'</div><div class="kl">Promotores</div></div><div class="kpi"><div class="kv" style="color:#F39C12">'+pa+'</div><div class="kl">Passivos</div></div><div class="kpi"><div class="kv" style="color:#C0392B">'+de+'</div><div class="kl">Detratores</div></div></div>');
+  w.document.write('<table><thead><tr><th>Data</th><th>Loja</th><th>Nota</th><th>Perfil</th><th>Comentário</th></tr></thead><tbody>'+rows+'</tbody></table>');
+  w.document.write('<scr'+'ipt>window.onload=function(){window.print()}<'+'/scr'+'ipt></body></html>');
+  w.document.close();
+}
+
+// ══════════════════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════════════════
+document.getElementById("eyeBtn").addEventListener("click",function(){
+  var i=document.getElementById("lPass");
+  i.type=i.type==="password"?"text":"password";
+  this.textContent=i.type==="password"?"👁":"🙈";
+});
+
+function doLogin() {
+  var u=document.getElementById("lEmail").value.trim();
+  var p=document.getElementById("lPass").value;
+  var all=getAllUsers();
+  if (all[u]&&all[u]===p) {
+    sessionStorage.setItem("nps_admin","1");
+    startDashboard();
+  } else {
+    document.getElementById("lErr").style.display="block";
+    document.getElementById("lPass").value="";
+  }
+}
+document.getElementById("loginBtn").addEventListener("click",doLogin);
+document.getElementById("lPass").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin();});
+document.getElementById("lEmail").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("lPass").focus();});
+document.getElementById("outBtn").addEventListener("click",function(){sessionStorage.removeItem("nps_admin");location.reload();});
+
+// ══════════════════════════════════════════════════════
+// DASHBOARD INIT
+// ══════════════════════════════════════════════════════
+function startDashboard() {
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+
+  // Popular UF
+  var ufs=[...new Set(LOJAS.map(function(l){return l.uf;}))].sort();
+  ["fEst","fUF"].forEach(function(id){
+    var sel=document.getElementById(id);
+    ufs.forEach(function(uf){var o=document.createElement("option");o.value=o.textContent=uf;sel.appendChild(o);});
+  });
+
+  // Tabs
+  document.querySelectorAll(".tab").forEach(function(tab){
+    tab.addEventListener("click",function(){
+      document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
+      tab.classList.add("active");
+      var id=tab.getAttribute("data-tab");
+      ["tabAval","tabRank","tabLojas","tabLinks","tabUsers"].forEach(function(t){document.getElementById(t).style.display="none";});
+      var map={aval:"tabAval",rank:"tabRank",lojas:"tabLojas",links:"tabLinks",users:"tabUsers"};
+      document.getElementById(map[id]).style.display="block";
+      if (id==="rank") renderRank();
+      if (id==="lojas") renderLojas();
+      if (id==="links") renderLinks();
+      if (id==="users") {renderUserList();}
+    });
+  });
+
+  // Filtros avaliações
+  document.getElementById("fLoja").addEventListener("input",function(){
+    var v=this.value.toLowerCase().trim();
+    selectedLoja=null;
+    var dd=document.getElementById("acDrop");
+    if (!v||v.length<2){dd.style.display="none";renderAval();return;}
+    var m=LOJAS.filter(function(l){return l.nome.toLowerCase().includes(v)||l.id.toLowerCase().includes(v);}).slice(0,8);
+    if (!m.length){dd.style.display="none";renderAval();return;}
+    dd.innerHTML=m.map(function(l){return "<div class='acitem' data-id='"+l.id+"' data-nome='"+l.nome.replace(/'/g,"&#39;")+"'>"+l.nome+" <span style='font-size:11px;color:var(--muted)'>"+l.uf+"</span></div>";}).join("");
+    dd.style.display="block";
+    dd.querySelectorAll(".acitem").forEach(function(item){
+      item.addEventListener("click",function(){
+        selectedLoja={id:item.getAttribute("data-id"),nome:item.getAttribute("data-nome")};
+        document.getElementById("fLoja").value=selectedLoja.nome;
+        dd.style.display="none";
+        renderAval();
+      });
+    });
+    renderAval();
+  });
+  document.addEventListener("click",function(e){if(!e.target.closest("#fLoja")&&!e.target.closest("#acDrop"))document.getElementById("acDrop").style.display="none";});
+  document.getElementById("fNPS").addEventListener("change",renderAval);
+  document.getElementById("fPer").addEventListener("change",renderAval);
+
+  // Sorting
+  document.querySelectorAll("th[data-col]").forEach(function(th){
+    th.addEventListener("click",function(){
+      var c=th.getAttribute("data-col");
+      if (sortCol===c) sortAsc=!sortAsc; else{sortCol=c;sortAsc=false;}
+      renderAval();
+    });
+  });
+
+  // Exportar
+  document.getElementById("btnCSV").addEventListener("click",exportCSV);
+  document.getElementById("btnPDF").addEventListener("click",exportPDF);
+
+  // Links filtros
+  document.getElementById("fLink").addEventListener("input",renderLinks);
+  document.getElementById("fEst").addEventListener("change",renderLinks);
+  document.getElementById("btnCopyAll").addEventListener("click",function(){
+    var fl=document.getElementById("fLink").value.toLowerCase();
+    var fe=document.getElementById("fEst").value;
+    var lojas=LOJAS.filter(function(l){if(fl&&!l.nome.toLowerCase().includes(fl))return false;if(fe&&l.uf!==fe)return false;return true;});
+    navigator.clipboard.writeText(lojas.map(function(l){return l.nome+"\n"+makeLink(l);}).join("\n\n")).then(function(){alert(lojas.length+" links copiados!");});
+  });
+  document.getElementById("btnLinksCSV").addEventListener("click",function(){
+    var rows=[["#","Loja","UF","ID","Link","Avaliações","NPS","Média"]];
+    LOJAS.forEach(function(l,i){var s=getLojaStats(l.id);rows.push([i+1,l.nome,l.uf,l.id,makeLink(l),s?s.total:0,s?s.nps:"",s?s.avg:""]);});
+    dlCSV(rows,"links_lojas_"+today()+".csv");
+  });
+
+  // Por loja filtros
+  document.getElementById("fLT").addEventListener("input",renderLojas);
+  document.getElementById("fUF").addEventListener("change",renderLojas);
+  document.getElementById("fNT").addEventListener("change",renderLojas);
+
+  // Setup usuarios
+  setupUsers();
+
+  // Carregar Firebase
+  loadFirebase();
+}
+
+// ══════════════════════════════════════════════════════
+// FIREBASE
+// ══════════════════════════════════════════════════════
+function loadFirebase() {
+  Promise.all([
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"),
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js")
+  ]).then(function(mods) {
+    var initializeApp=mods[0].initializeApp;
+    var getFirestore=mods[1].getFirestore;
+    var collection=mods[1].collection;
+    var query=mods[1].query;
+    var orderBy=mods[1].orderBy;
+    var onSnapshot=mods[1].onSnapshot;
+
+    var db=getFirestore(initializeApp(FIREBASE_CONFIG));
+
+    // onSnapshot em tempo real - atualiza sempre que houver mudança
+    onSnapshot(
+      query(collection(db,"avaliacoes"), orderBy("criadoEm","desc")),
+      function(snap) {
+        allData=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
+        renderAval();
+        renderLinks();
+        document.getElementById("lLoading").style.display="none";
+        document.getElementById("tLoading").style.display="none";
+        // Atualizar tabs abertas
+        if (document.getElementById("tabRank").style.display==="block") renderRank();
+        if (document.getElementById("tabLojas").style.display==="block") renderLojas();
+      },
+      function(err) {
+        console.error("Firebase erro:",err);
+        document.getElementById("tLoading").textContent="Erro ao conectar: "+err.message;
+      }
+    );
+  }).catch(function(e){
+    console.error("Erro ao carregar Firebase:",e);
+    document.getElementById("tLoading").textContent="Erro ao carregar Firebase.";
+  });
+}
+
+// Auto-login
+if (sessionStorage.getItem("nps_admin")==="1") startDashboard();
+</script>
+</body>
+</html>
