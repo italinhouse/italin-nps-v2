@@ -3,78 +3,100 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Avalie a Ital'in House</title>
+  <title>Painel NPS — Ital'in House</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--red:#C0392B;--dark:#1A0A05;--text:#3D1F15;--muted:#7A5A50;--border:#E8D5C4;--gold:#C9A84C;--green:#27AE60}
-    body{min-height:100vh;font-family:'DM Sans',sans-serif;background:#FDF6EE;color:var(--text);display:flex;flex-direction:column}
-    .topbar{background:var(--red);padding:16px 24px;display:flex;align-items:center;justify-content:center}
-    .topbar img{height:48px;filter:brightness(0) invert(1);object-fit:contain}
-    main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px 48px}
-    .card{background:#fff;border-radius:16px;box-shadow:0 4px 40px rgba(26,10,5,.10);max-width:540px;width:100%;padding:40px 32px;border:1px solid var(--border)}
-    .store-badge{display:inline-flex;align-items:center;gap:6px;background:#FEF3E2;border:1px solid #F0C98A;color:#7A5010;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:4px 12px;border-radius:40px;margin-bottom:18px}
-    h1{font-family:'Playfair Display',serif;font-size:24px;color:var(--dark);margin-bottom:8px;line-height:1.3}
-    h1 em{color:var(--red);font-style:italic}
-    .sub{color:var(--muted);font-size:14px;margin-bottom:28px;line-height:1.6}
-    .q-label{font-size:13px;font-weight:500;margin-bottom:12px}
-    input[type=range]{-webkit-appearance:none;width:100%;height:8px;border-radius:8px;background:linear-gradient(90deg,#C0392B 0%,#F39C12 50%,#27AE60 100%);outline:none;cursor:pointer;display:block}
-    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:3px solid var(--red);box-shadow:0 2px 8px rgba(192,57,43,.3);cursor:pointer}
-    .slider-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
-    .score-box{text-align:center;margin:18px 0 24px}
-    .score-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:700;line-height:1;transition:color .3s}
-    .score-emoji{font-size:26px;display:block;margin-top:4px}
-    .score-lbl{font-size:12px;color:var(--muted);margin-top:2px}
-    label.lbl{font-size:13px;font-weight:500;display:block;margin-bottom:8px}
-    textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);resize:vertical;min-height:88px;outline:none;background:#FDFAF7;transition:border-color .2s}
-    textarea:focus{border-color:var(--red)}
-    .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;background:linear-gradient(135deg,var(--red),#922B21);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;margin-top:20px;box-shadow:0 4px 16px rgba(192,57,43,.35);transition:opacity .2s}
-    .btn:hover{opacity:.9}.btn:disabled{opacity:.5;cursor:not-allowed}
-    .success{text-align:center}
-    .success-icon{font-size:52px;display:block;margin-bottom:14px}
-    .success h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--dark);margin-bottom:10px}
-    .success p{color:var(--muted);font-size:14px;line-height:1.7}
-    .ok-tag{display:inline-flex;align-items:center;gap:6px;background:#EAF7EF;border:1px solid #A3D9B5;color:#1E7A40;font-size:12px;font-weight:500;padding:5px 14px;border-radius:40px;margin-top:14px}
-    .cupom-box{margin-top:22px;background:linear-gradient(135deg,#FFF8F0,#FFF3E6);border:2px dashed var(--gold);border-radius:14px;padding:18px 22px;text-align:center}
-    .cupom-title{font-size:13px;color:var(--muted);margin-bottom:5px}
-    .cupom-desc{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:12px}
-    .cupom-code{display:inline-block;background:var(--red);color:#fff;font-family:monospace;font-size:20px;font-weight:700;letter-spacing:3px;padding:9px 22px;border-radius:8px}
-    .cupom-sub{font-size:11px;color:var(--muted);margin-top:8px}
-    footer{text-align:center;padding:18px;font-size:11px;color:var(--muted);opacity:.6}
-    @media(max-width:480px){.card{padding:26px 16px}.score-num{font-size:48px}}
+    :root{--red:#C0392B;--red2:#922B21;--dark:#1A0A05;--bg:#F5EDE3;--card:#FFFFFF;--text:#3D1F15;--muted:#7A5A50;--border:#E8D5C4;--green:#27AE60;--yellow:#F39C12;--r:12px}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+    /* BARRA SUPERIOR */
+    .topbar{background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+    .tl{display:flex;align-items:center;gap:12px}
+    .tl img{height:28px;filter:brightness(0) invert(1)}
+    .tl span{color:rgba(255,255,255,.55);font-size:13px}
+    .badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+
+    /* CONTEUDO E ABAS */
+    .content{padding:22px}
+    .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+    .tab{padding:8px 17px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s}
+    .tab.active{background:var(--red);color:#fff;border-color:var(--red)}
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* TABELAS */
+    .twrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden; margin-top: 10px;}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead{background:#FAF2EA}
+    th{padding:12px 15px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border)}
+    td{padding:12px 15px;border-bottom:1px solid #F2E8DF; vertical-align: middle;}
+    
+    .pill{padding:4px 10px; border-radius:20px; color:#fff; font-weight:bold; font-size: 11px;}
+    .promoter{background:var(--green)}.passive{background:var(--yellow)}.detractor{background:var(--red)}
+    
+    .btn-copy{padding:5px 10px; background:#eee; border:1px solid #ccc; border-radius:4px; cursor:pointer; font-size:11px;}
+    .btn-copy:hover{background:#ddd}
+    .fi { padding: 8px; width: 100%; max-width: 300px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 10px; }
   </style>
 </head>
 <body>
-  <header><div class="topbar"><img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" alt="Ital'in House"/></div></header>
-  <main>
-    <div class="card" id="card">
-      <div class="store-badge" id="storeBadge">Carregando...</div>
-      <h1>Como foi sua <em>experiência</em> com a Ital'in House?</h1>
-      <p class="sub">Sua opinião nos ajuda a servir ainda melhor. Leva menos de 1 minuto! 🍝</p>
-      
-      <div class="q-label">Qual nota você dá para sua experiência?</div>
-      <input type="range" id="slider" min="0" max="10" value="8"/>
-      <div class="slider-labels"><span>😞 Não recomendaria</span><span>😍 Recomendaria muito</span></div>
-      
-      <div class="score-box">
-        <div class="score-num" id="scoreNum">8</div>
-        <span class="score-emoji" id="scoreEmoji">😄</span>
-        <div class="score-lbl" id="scoreLbl">Ótimo</div>
-      </div>
 
-      <label class="lbl" for="comment">Conte mais sobre sua experiência com seu pedido</label>
-      <textarea id="comment" placeholder="Resuma em poucas palavras o que achou (máx. 140 caracteres)" maxlength="140"></textarea>
-      
-      <button class="btn" id="submitBtn">Enviar Avaliação 🍝</button>
+  <nav class="topbar">
+    <div class="tl">
+      <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png"/>
+      <span>Painel NPS</span><span class="badge">LIVE</span>
     </div>
-  </main>
-  <footer>Ital'in House © 2026 — Maior Franquia de Comida Italiana do Brasil<br>Seus dados são tratados com segurança e privacidade.</footer>
+  </nav>
+
+  <div class="content">
+    <div class="tabs">
+      <div class="tab active" data-target="aba-avaliacoes">📋 Avaliações</div>
+      <div class="tab" data-target="aba-links">🔗 Links por Loja</div>
+    </div>
+
+    <div id="aba-avaliacoes" class="tab-panel active">
+      <div class="twrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Loja</th>
+              <th>Nota</th>
+              <th>Comentário</th>
+            </tr>
+          </thead>
+          <tbody id="lista-avaliacoes">
+            <tr><td colspan="4">Carregando dados em tempo real...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="aba-links" class="tab-panel">
+      <input type="text" class="fi" id="buscaLoja" placeholder="Filtrar loja..." onkeyup="filtrarLojas()">
+      <div class="twrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome da Loja</th>
+              <th>ID</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="lista-links">
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
   <script type="module">
+    // 1. CONFIGURAÇÃO FIREBASE
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    const FIREBASE_CONFIG = {
+    const firebaseConfig = {
       apiKey: "AIzaSyCInytAdn5ly8DvqwLUvEFXsfQcP0YXyd4",
       authDomain: "italinhouse-nps.firebaseapp.com",
       projectId: "italinhouse-nps",
@@ -83,84 +105,149 @@
       appId: "1:968639332938:web:d47cda07386bbb645d9cb3"
     };
 
-    const app = initializeApp(FIREBASE_CONFIG);
+    const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const p = new URLSearchParams(location.search);
-    const lojaId = p.get("loja");
-    const lojaNome = p.get("nome") || "Nossa Loja";
-
-    const card = document.getElementById("card");
-    const storeBadge = document.getElementById("storeBadge");
-
-    if (!lojaId) {
-      card.innerHTML = `
-        <div style="text-align:center;padding:20px">
-          <span style="font-size:40px">⚠️</span>
-          <h2 style="margin-top:10px; font-family:'Playfair Display',serif">Link Inválido</h2>
-          <p style="font-size:14px;color:var(--muted);margin-top:10px">Por favor, utilize o link enviado pela loja para avaliar seu pedido.</p>
-        </div>`;
-    } else {
-      storeBadge.textContent = lojaNome;
-      document.title = `Avalie a ${lojaNome} — Ital'in House`;
-
-      const EMOJIS = {
-        0:["😭","Muito ruim"],1:["😖","Ruim"],2:["😞","Ruim"],3:["😕","Razoável"],
-        4:["😐","Regular"],5:["🙂","Ok"],6:["😊","Bom"],7:["😊","Bom"],
-        8:["😄","Ótimo"],9:["🤩","Excelente"],10:["😍","Perfeito!"]
+    // 2. LÓGICA DAS ABAS (Corrigido para abrir ao clicar)
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+      tab.onclick = () => {
+        const target = tab.getAttribute('data-target');
+        
+        // Remove active de tudo
+        document.querySelectorAll('.tab, .tab-panel').forEach(el => el.classList.remove('active'));
+        
+        // Ativa o clicado
+        tab.classList.add('active');
+        document.getElementById(target).classList.add('active');
       };
+    });
 
-      const slider = document.getElementById("slider");
-      const numEl = document.getElementById("scoreNum");
-      const emoEl = document.getElementById("scoreEmoji");
-      const lblEl = document.getElementById("scoreLbl");
-      const submitBtn = document.getElementById("submitBtn");
+    // 3. ATUALIZAÇÃO EM TEMPO REAL (onSnapshot)
+    const q = query(collection(db, "avaliacoes"), orderBy("criadoEm", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const container = document.getElementById('lista-avaliacoes');
+      container.innerHTML = '';
+      
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const score = data.score || 0;
+        const status = score >= 9 ? 'promoter' : (score >= 7 ? 'passive' : 'detractor');
+        const dataFmt = data.criadoEm?.toDate ? data.criadoEm.toDate().toLocaleDateString('pt-BR') : '---';
 
-      function update(v) {
-        numEl.textContent = v;
-        emoEl.textContent = EMOJIS[v][0];
-        lblEl.textContent = EMOJIS[v][1];
-        numEl.style.color = v <= 3 ? "#C0392B" : v <= 6 ? "#F39C12" : "#27AE60";
-      }
-
-      slider.addEventListener("input", () => update(+slider.value));
-      update(8);
-
-      submitBtn.addEventListener("click", async () => {
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Enviando...";
-
-        try {
-          await addDoc(collection(db, "avaliacoes"), {
-            lojaId: lojaId,
-            lojaNome: lojaNome,
-            score: +slider.value,
-            comment: document.getElementById("comment").value.trim() || null,
-            criadoEm: serverTimestamp()
-          });
-
-          // ALTERADO: Porcentagem de desconto para 15% no HTML gerado
-          card.innerHTML = `
-            <div class="success">
-              <span class="success-icon">🫶</span>
-              <h2>Muito obrigado!</h2>
-              <p>Sua avaliação foi registrada com sucesso.<br>Ela nos ajuda a entregar a melhor experiência italiana do Brasil!</p>
-              <div class="ok-tag">✓ Resposta enviada</div>
-              <div class="cupom-box">
-                <div class="cupom-title">🎁 Um presente especial para você!</div>
-                <div class="cupom-desc">Use o cupom abaixo no seu próximo pedido e ganhe <strong>15% de desconto!</strong></div>
-                <div class="cupom-code">OBRIGADOIH</div>
-                <div class="cupom-sub">*Válido para pedidos via APP ou AnotaAi</div>
-              </div>
-            </div>`;
-        } catch(e) {
-          console.error("Erro ao salvar:", e);
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Enviar Avaliação 🍝";
-          alert("Erro de conexão. Verifique sua internet e tente novamente.");
-        }
+        container.innerHTML += `
+          <tr>
+            <td>${dataFmt}</td>
+            <td><strong>${data.lojaNome || 'Loja Desconhecida'}</strong></td>
+            <td><span class="pill ${status}">${score}</span></td>
+            <td>${data.comentario || data.comment || '<small style="color:#ccc">Sem comentário</small>'}</td>
+          </tr>
+        `;
       });
+    });
+
+    // 4. GERAÇÃO DE LINKS DAS LOJAS (68 Lojas)
+    const LOJAS = [
+      {id:"GO001",nome:"Ital'in House - Goiânia - Jardim América"},
+      {id:"SP002",nome:"Ital'in House - Ribeirão Pires - Centro"},
+      {id:"SP003",nome:"Ital'in House - Santo André - Parque Marajoara"},
+      {id:"SP004",nome:"Ital'in House - Guarujá - Pitangueiras"},
+      {id:"RJ005",nome:"Ital'in House - Rio de Janeiro - Barra da Tijuca"},
+      {id:"SP006",nome:"Ital'in House - São Paulo - Campo Limpo"},
+      {id:"SP007",nome:"Ital'in House - Barretos - Aeroporto"},
+      {id:"MS008",nome:"Ital'in House - Dourados - Jardim Caramuru"},
+      {id:"MT009",nome:"Ital'in House - Rondonópolis - Coophalis"},
+      {id:"MG010",nome:"Ital'in House - Uberlândia - Saraiva"},
+      {id:"SP011",nome:"Ital'in House - São Paulo - São Mateus"},
+      {id:"PR012",nome:"Ital'in House - Ponta Grossa - Centro"},
+      {id:"MS013",nome:"Ital'in House - Campo Grande - Jardim dos Estados"},
+      {id:"MG014",nome:"Ital'in House - Governador Valadares - Centro"},
+      {id:"SP015",nome:"Ital'in House - São José dos Campos - Bosque dos Eucaliptos"},
+      {id:"SP016",nome:"Ital'in House - Piracicaba - Cidade Alta"},
+      {id:"SP017",nome:"Ital'in House - Olímpia - Patrimônio de São João Batista"},
+      {id:"SP018",nome:"Ital'in House - São Paulo - Vila Matilde"},
+      {id:"SP019",nome:"Ital'in House - São Paulo - Jabaquara"},
+      {id:"MT020",nome:"Ital'in House - Cuiabá - Areão"},
+      {id:"SP021",nome:"Ital'in House - Barueri - Alphaville"},
+      {id:"SP022",nome:"Ital'in House - Mogi das Cruzes - Centro"},
+      {id:"SP023",nome:"Ital'in House - São Paulo - São Miguel"},
+      {id:"SP024",nome:"Ital'in House - Jacareí - Loteamento Villa Branca"},
+      {id:"PR025",nome:"Ital'in House - Araucária - Centro"},
+      {id:"DF026",nome:"Ital'in House - Brasília - Setor Sudoeste"},
+      {id:"SP027",nome:"Ital'in House - Taubaté - Centro"},
+      {id:"MG028",nome:"Ital'in House - Ituiutaba - Centro"},
+      {id:"ES029",nome:"Ital'in House - Vitória - ES"},
+      {id:"SP030",nome:"Ital'in House - São Paulo - Vila Madalena"},
+      {id:"SP031",nome:"Ital'in House - Carapicuíba"},
+      {id:"SP032",nome:"Ital'in House - São Paulo - Taboão da Serra"},
+      {id:"SP033",nome:"Ital'in House - Araçatuba - Higienópolis"},
+      {id:"SP034",nome:"Italin House Macarrão Gourmet - Pindamonhangaba"},
+      {id:"SP035",nome:"Ital'in House - Limeira - SP"},
+      {id:"SP036",nome:"Ital'in House - Itapevi - Jardim Santa Rita"},
+      {id:"SC037",nome:"Ital'in House - Joinville - Santo Antônio"},
+      {id:"MT038",nome:"Ital'in House - Sinop - Setor Residencial Norte"},
+      {id:"RS039",nome:"Ital'in House - Canoas"},
+      {id:"SP040",nome:"Ital'in House - Votuporanga - Santa Eliza"},
+      {id:"SP041",nome:"Ital'in House - Birigui"},
+      {id:"SP042",nome:"Ital'in House - São Paulo - Rio Claro"},
+      {id:"AL043",nome:"Ital'in House - Maceió - Pajuçara"},
+      {id:"PI044",nome:"Ital'in House - Teresina - Ininga"},
+      {id:"SP045",nome:"Ital'in House - São Bernardo do Campo - Rudge Ramos"},
+      {id:"SP046",nome:"Ital'in House - Praia Grande"},
+      {id:"MG047",nome:"Ital'in House - Betim - Inga Alto"},
+      {id:"RS048",nome:"Ital'in House - Esteio - Centro"},
+      {id:"SP049",nome:"Ital'in House - São Paulo - Freguesia do Ó"},
+      {id:"SP050",nome:"Ital'in House - Botucatu - Centro"},
+      {id:"SP051",nome:"Ital'in House - São Paulo - Vila Mariana"},
+      {id:"SP052",nome:"Ital'in House - Osasco - Baronesa"},
+      {id:"SP053",nome:"Ital'in House - Itupeva - Lagoa"},
+      {id:"SP054",nome:"Ital'in House - São Vicente - Centro"},
+      {id:"PI055",nome:"Ital'in House - Parnaíba"},
+      {id:"MG056",nome:"Italin House BH - Buritis"},
+      {id:"SC057",nome:"Ital'in House - Itajaí - Centro"},
+      {id:"SP058",nome:"Ital'in House - São Paulo - Anália Franco"},
+      {id:"SP059",nome:"Ital'in House - Matão - Centro"},
+      {id:"SP060",nome:"Ital'in House - Fernandópolis - Centro"},
+      {id:"SP061",nome:"Ital'in House - São Paulo - Mooca"},
+      {id:"SP062",nome:"Ital'in House - São José do Rio Preto"},
+      {id:"SP063",nome:"Italin House - Araras"},
+      {id:"MG064",nome:"Ital'in House - Araxá - Centro"},
+      {id:"SP065",nome:"Ital'in House - Andradina - Centro"},
+      {id:"SP066",nome:"Ital'in House - Jundiaí - Jardim São Miguel"},
+      {id:"RJ067",nome:"Ital'in House - Rio de Janeiro - Copacabana"},
+      {id:"SP068",nome:"Ital'in House - Leme - Centro"}
+    ];
+
+    function renderLinks() {
+      const container = document.getElementById('lista-links');
+      container.innerHTML = LOJAS.map(loja => {
+        const link = `https://italinhouse.github.io/italin-nps-v2/?loja=${loja.id}&nome=${encodeURIComponent(loja.nome)}`;
+        return `
+          <tr>
+            <td>${loja.nome}</td>
+            <td><code>${loja.id}</code></td>
+            <td>
+              <button class="btn-copy" onclick="copy('${link}')">Copiar Link</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
+
+    window.copy = (txt) => {
+      navigator.clipboard.writeText(txt);
+      alert('Link copiado!');
+    };
+
+    window.filtrarLojas = () => {
+      const termo = document.getElementById('buscaLoja').value.toLowerCase();
+      const linhas = document.querySelectorAll('#lista-links tr');
+      linhas.forEach(ln => {
+        ln.style.display = ln.innerText.toLowerCase().includes(termo) ? '' : 'none';
+      });
+    };
+
+    renderLinks();
   </script>
 </body>
 </html>
