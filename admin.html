@@ -432,18 +432,8 @@ var docIdMap = {};
 // ══════════════════════════════════════════════════════
 // UTILITÁRIOS
 // ══════════════════════════════════════════════════════
-// Mapa rápido id→nome para lookup
-var LOJAS_MAP = {};
-LOJAS.forEach(function(l){ LOJAS_MAP[l.id] = l.nome; });
-
 function makeLink(l) {
   return BASE_URL + "?loja=" + encodeURIComponent(l.id) + "&nome=" + encodeURIComponent(l.nome);
-}
-// Resolve o nome da loja: usa lojaNome do Firestore ou fallback pelo lojaId no array LOJAS
-function resolveNome(d) {
-  if (d.lojaNome && d.lojaNome.trim() && d.lojaNome !== "undefined") return d.lojaNome.trim();
-  if (d.lojaId && LOJAS_MAP[d.lojaId]) return LOJAS_MAP[d.lojaId];
-  return d.lojaId || "—";
 }
 function today() { return new Date().toISOString().slice(0,10); }
 function fmtDate(d) {
@@ -545,7 +535,13 @@ function renderAval() {
     var lbl=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";
     var cl=classif(d.comment);
     var checked=selectedIds.has(d.id)?"checked":"";
-    html+="<tr data-id='"+d.id+"'><td><div class='cb-wrap'><input type='checkbox' class='row-cb' data-id='"+d.id+"' "+checked+"/></div></td><td style='color:var(--muted);font-size:12px'>"+fmtDate(d.criadoEm)+"</td><td><strong>"+resolveNome(d)+"</strong></td><td><span class='pill "+type+"'>"+d.score+"</span></td><td><span class='ntag "+type+"'>"+lbl+"</span></td><td>"+classifBadge(cl)+"</td><td><div class='comment-c' title='"+(d.comment||"")+"'>"+(d.comment||"<span style='opacity:.4'>sem comentário</span>")+"</div></td></tr>";
+    // Corrigir nome da loja: usar lista LOJAS se lojaNome estiver incompleto
+    var nomeCorreto = d.lojaNome;
+    if (!nomeCorreto || nomeCorreto.length < 5) {
+      var lojaObj = LOJAS.find(function(l){return l.id===d.lojaId;});
+      nomeCorreto = lojaObj ? lojaObj.nome : (d.lojaId||"—");
+    }
+    html+="<tr data-id='"+d.id+"'><td><div class='cb-wrap'><input type='checkbox' class='row-cb' data-id='"+d.id+"' "+checked+"/></div></td><td style='color:var(--muted);font-size:12px'>"+fmtDate(d.criadoEm)+"</td><td><strong>"+nomeCorreto+"</strong></td><td><span class='pill "+type+"'>"+d.score+"</span></td><td><span class='ntag "+type+"'>"+lbl+"</span></td><td>"+classifBadge(cl)+"</td><td><div class='comment-c' title='"+(d.comment||"")+"'>"+(d.comment||"<span style='opacity:.4'>sem comentário</span>")+"</div></td></tr>";
   });
   document.getElementById("tBody").innerHTML=html;
   // Eventos dos checkboxes
@@ -742,7 +738,7 @@ function exportCSV() {
   var rows=[["Data","Loja","ID","Nota","Perfil","Classificação","Comentário"]];
   data.forEach(function(d){
     var type=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";
-    rows.push([fmtDate(d.criadoEm),resolveNome(d),d.lojaId||"",d.score,type,classif(d.comment)||"",(d.comment||"").replace(/,/g,";")]);
+    rows.push([fmtDate(d.criadoEm),d.lojaNome||"",d.lojaId||"",d.score,type,classif(d.comment)||"",(d.comment||"").replace(/,/g,";")]);
   });
   dlCSV(rows,"nps_"+today()+".csv");
 }
@@ -754,7 +750,7 @@ function exportPDF() {
   var nps=t?Math.round(((pr-de)/t)*100):0;
   var avg=t?(data.reduce(function(s,d){return s+d.score;},0)/t).toFixed(1):"—";
   var nc=nps>=50?"#27AE60":nps>=0?"#F39C12":"#C0392B";
-  var rows=data.map(function(d){var type=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";return "<tr><td>"+fmtDate(d.criadoEm)+"</td><td>"+resolveNome(d)+"</td><td style='text-align:center;font-weight:bold'>"+d.score+"</td><td>"+type+"</td><td>"+(d.comment||"")+"</td></tr>";}).join("");
+  var rows=data.map(function(d){var type=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";return "<tr><td>"+fmtDate(d.criadoEm)+"</td><td>"+(d.lojaNome||"—")+"</td><td style='text-align:center;font-weight:bold'>"+d.score+"</td><td>"+type+"</td><td>"+(d.comment||"")+"</td></tr>";}).join("");
   var w=window.open("","_blank");
   w.document.write('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>'+titulo+'</title><style>body{font-family:Arial,sans-serif;margin:28px;color:#1A0A05}h1{color:#C0392B;font-size:19px;margin-bottom:3px}.sub{color:#7A5A50;font-size:12px;margin-bottom:20px}.kpis{display:flex;gap:14px;margin-bottom:20px}.kpi{background:#FDF6EE;border:1px solid #E8D5C4;border-radius:8px;padding:11px 18px;text-align:center}.kv{font-size:26px;font-weight:bold;color:#C0392B}.kl{font-size:10px;color:#7A5A50;text-transform:uppercase}table{width:100%;border-collapse:collapse;font-size:12px}th{background:#C0392B;color:#fff;padding:7px 9px;text-align:left}td{padding:6px 9px;border-bottom:1px solid #F2E8DF}tr:nth-child(even) td{background:#FDF8F3}</style></head><body>');
   w.document.write('<h1>🍝 '+titulo+'</h1><div class="sub">'+new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"})+' · '+t+' avaliação'+(t!==1?"ões":"")+'</div>');
@@ -901,26 +897,14 @@ function loadFirebase() {
 
     var db=getFirestore(initializeApp(FIREBASE_CONFIG));
 
-    // Expor referências Firebase globalmente para uso na deleção em massa
-    window._fbDb = db;
-    window._fbDoc = mods[1].doc;
-    window._fbDeleteDoc = mods[1].deleteDoc;
-
-    // Setup ações em massa (após Firebase estar pronto)
+    // Setup ações em massa
     setupBulkActions();
 
     // onSnapshot em tempo real - atualiza sempre que houver mudança
     onSnapshot(
       query(collection(db,"avaliacoes"), orderBy("criadoEm","desc")),
       function(snap) {
-        allData=snap.docs.map(function(d){
-          var data=d.data();
-          // Garantir que lojaNome esteja sempre preenchido pelo lojaId se necessário
-          if (!data.lojaNome && data.lojaId && LOJAS_MAP[data.lojaId]) {
-            data.lojaNome = LOJAS_MAP[data.lojaId];
-          }
-          return Object.assign({id:d.id},data);
-        });
+        allData=snap.docs.map(function(d){return Object.assign({id:d.id},d.data());});
         renderAval();
         renderLinks();
         document.getElementById("lLoading").style.display="none";
