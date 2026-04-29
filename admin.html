@@ -535,12 +535,9 @@ function renderAval() {
     var lbl=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";
     var cl=classif(d.comment);
     var checked=selectedIds.has(d.id)?"checked":"";
-    // Corrigir nome da loja: usar lista LOJAS se lojaNome estiver incompleto
-    var nomeCorreto = d.lojaNome;
-    if (!nomeCorreto || nomeCorreto.length < 5) {
-      var lojaObj = LOJAS.find(function(l){return l.id===d.lojaId;});
-      nomeCorreto = lojaObj ? lojaObj.nome : (d.lojaId||"—");
-    }
+    // Corrigir nome da loja: SEMPRE buscar na lista LOJAS pelo lojaId (fonte de verdade)
+    var lojaObj = LOJAS.find(function(l){return l.id===d.lojaId;});
+    var nomeCorreto = lojaObj ? lojaObj.nome : (d.lojaNome||d.lojaId||"—");
     html+="<tr data-id='"+d.id+"'><td><div class='cb-wrap'><input type='checkbox' class='row-cb' data-id='"+d.id+"' "+checked+"/></div></td><td style='color:var(--muted);font-size:12px'>"+fmtDate(d.criadoEm)+"</td><td><strong>"+nomeCorreto+"</strong></td><td><span class='pill "+type+"'>"+d.score+"</span></td><td><span class='ntag "+type+"'>"+lbl+"</span></td><td>"+classifBadge(cl)+"</td><td><div class='comment-c' title='"+(d.comment||"")+"'>"+(d.comment||"<span style='opacity:.4'>sem comentário</span>")+"</div></td></tr>";
   });
   document.getElementById("tBody").innerHTML=html;
