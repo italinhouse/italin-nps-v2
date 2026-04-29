@@ -82,7 +82,12 @@
     const db = getFirestore(initializeApp(FIREBASE_CONFIG));
     const p  = new URLSearchParams(location.search);
     const lojaId   = p.get("loja") || "";
-    const lojaNome = p.get("nome") || lojaId || "Loja";
+
+    // Lista completa de lojas para garantir nome correto no Firebase
+    const LOJAS_NOMES = {"GO001":"Ital'in House - Goiânia - Jardim América","SP002":"Ital'in House - Ribeirão Pires - Centro","SP003":"Ital'in House - Santo André - Parque Marajoara","SP004":"Ital'in House - Guarujá - Pitangueiras","RJ005":"Ital'in House - Rio de Janeiro - Barra da Tijuca","SP006":"Ital'in House - São Paulo - Campo Limpo","SP007":"Ital'in House - Barretos - Aeroporto","MS008":"Ital'in House - Dourados - Jardim Caramuru","MT009":"Ital'in House - Rondonópolis - Coophalis","MG010":"Ital'in House - Uberlândia - Saraiva","SP011":"Ital'in House - São Paulo - São Mateus","PR012":"Ital'in House - Ponta Grossa - Centro","MS013":"Ital'in House - Campo Grande - Jardim dos Estados","MG014":"Ital'in House - Governador Valadares - Centro","SP015":"Ital'in House - São José dos Campos - Bosque dos Eucaliptos","SP016":"Ital'in House - Piracicaba - Cidade Alta","SP017":"Ital'in House - Olímpia - Patrimônio de São João Batista","SP018":"Ital'in House - São Paulo - Vila Matilde","SP019":"Ital'in House - São Paulo - Jabaquara","MT020":"Ital'in House - Cuiabá - Areão","SP021":"Ital'in House - Barueri - Alphaville","SP022":"Ital'in House - Mogi das Cruzes - Centro","SP023":"Ital'in House - São Paulo - São Miguel","SP024":"Ital'in House - Jacareí - Loteamento Villa Branca","PR025":"Ital'in House - Araucária - Centro","DF026":"Ital'in House - Brasília - Setor Sudoeste","SP027":"Ital'in House - Taubaté - Centro","MG028":"Ital'in House - Ituiutaba - Centro","ES029":"Ital'in House - Vitória - ES","SP030":"Ital'in House - São Paulo - Vila Madalena","SP031":"Ital'in House - Carapicuíba","SP032":"Ital'in House - São Paulo - Taboão da Serra","SP033":"Ital'in House - Araçatuba - Higienópolis","SP034":"Italin House Macarrão Gourmet - Pindamonhangaba","SP035":"Ital'in House - Limeira - SP","SP036":"Ital'in House - Itapevi - Jardim Santa Rita","SC037":"Ital'in House - Joinville - Santo Antônio","MT038":"Ital'in House - Sinop - Setor Residencial Norte","RS039":"Ital'in House - Canoas","SP040":"Ital'in House - Votuporanga - Santa Eliza","SP041":"Ital'in House - Birigui","SP042":"Ital'in House - São Paulo - Rio Claro","AL043":"Ital'in House - Maceió - Pajuçara","PI044":"Ital'in House - Teresina - Ininga","SP045":"Ital'in House - São Bernardo do Campo - Rudge Ramos","SP046":"Ital'in House - Praia Grande","MG047":"Ital'in House - Betim - Inga Alto","RS048":"Ital'in House - Esteio - Centro","SP049":"Ital'in House - São Paulo - Freguesia do Ó","SP050":"Ital'in House - Botucatu - Centro","SP051":"Ital'in House - São Paulo - Vila Mariana","SP052":"Ital'in House - Osasco - Baronesa","SP053":"Ital'in House - Itupeva - Lagoa","SP054":"Ital'in House - São Vicente - Centro","PI055":"Ital'in House - Parnaíba","MG056":"Italin House BH - Buritis","SC057":"Ital'in House - Itajaí - Centro","SP058":"Ital'in House - São Paulo - Anália Franco","SP059":"Ital'in House - Matão - Centro","SP060":"Ital'in House - Fernandópolis - Centro","SP061":"Ital'in House - São Paulo - Mooca","SP062":"Ital'in House - São José do Rio Preto","SP063":"Italin House - Araras","MG064":"Ital'in House - Araxá - Centro","SP065":"Ital'in House - Andradina - Centro","SP066":"Ital'in House - Jundiaí - Jardim São Miguel","RJ067":"Ital'in House - Rio de Janeiro - Copacabana","SP068":"Ital'in House - Leme - Centro"};
+
+    // Nome sempre vem da lista pelo ID (fonte de verdade)
+    const lojaNome = LOJAS_NOMES[lojaId] || p.get("nome") || lojaId || "Loja";
 
     document.getElementById("storeBadge").textContent = lojaNome;
     document.title = `Avalie a ${lojaNome} — Ital'in House`;
@@ -127,7 +132,7 @@
             <div class="ok-tag">✓ Resposta enviada</div>
             <div class="cupom-box">
               <div class="cupom-title">🎁 Um presente especial para você!</div>
-              <div class="cupom-desc">Como forma de agradecimento, preparamos um presente para o seu próximo pedido:<br><strong>15% de desconto!</strong> Use o cupom abaixo no AnotaAi e aproveite uma deliciosa massa 🍝</div>
+              <div class="cupom-desc">Como forma de agradecimento, preparamos um presente para o seu próximo pedido:<br><strong>10% de desconto!</strong> Use o cupom abaixo no AnotaAi e aproveite uma deliciosa massa 🍝</div>
               <div class="cupom-code">OBRIGADOIH</div>
               <div class="cupom-sub">*Válido no seu próximo pedido pelo AnotaAi ou através do nosso APP</div>
             </div>
@@ -139,11 +144,6 @@
         alert("Erro ao enviar. Tente novamente.");
       }
     });
-  </script>
-</body>
-</html>
-      });
-    }
   </script>
 </body>
 </html>
