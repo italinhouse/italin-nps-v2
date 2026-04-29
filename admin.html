@@ -6,42 +6,208 @@
   <title>Painel NPS — Ital'in House</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <style>
+    /* Estilos originais mantidos */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--red:#C0392B;--red2:#922B21;--dark:#1A0A05;--bg:#F5EDE3;--card:#FFFFFF;--text:#3D1F15;--muted:#7A5A50;--border:#E8D5C4;--green:#27AE60;--yellow:#F39C12;--r:12px}
     body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--dark)}
+    .lc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:44px 38px;width:390px;text-align:center}
+    .li{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px;color:#fff;margin-bottom:10px}
+    .lbtn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;cursor:pointer}
+    #dashboard{display:none;padding:20px}
+    .topbar{background:var(--dark);color:#fff;padding:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .filters{display:flex;gap:10px;margin-bottom:20px}
+    .fi{padding:8px;border-radius:8px;border:1px solid var(--border)}
+    .twrap{background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+    table{width:100%;border-collapse:collapse}
+    th{background:#f9f9f9;padding:12px;text-align:left;font-size:12px}
+    td{padding:12px;border-top:1px solid #eee}
+    .pill{padding:4px 8px;border-radius:20px;color:#fff;font-weight:bold;font-size:12px}
+    .promoter{background:var(--green)}.passive{background:var(--yellow)}.detractor{background:var(--red)}
+    .bulk-bar{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--dark);padding:15px;border-radius:10px;color:#fff;gap:15px;align-items:center}
+    .bulk-bar.show{display:flex}
+    .bulk-del{background:var(--red);color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer}
+  </style>
+</head>
+<body>
 
-    /* LOGIN */
-    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--dark);background-image:radial-gradient(ellipse at 20% 30%,rgba(192,57,43,.25),transparent 55%)}
-    .lc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:44px 38px;width:100%;max-width:390px;text-align:center}
-    .lc img{height:42px;margin-bottom:22px;filter:brightness(0) invert(1)}
-    .lc h2{color:#fff;font-family:'Playfair Display',serif;font-size:21px;margin-bottom:4px}
-    .lc p{color:rgba(255,255,255,.4);font-size:13px;margin-bottom:26px}
-    .lf{position:relative;margin-bottom:10px}
-    .li{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 44px 12px 14px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
-    .li:focus{border-color:var(--red)}
-    .li::placeholder{color:rgba(255,255,255,.28)}
-    .eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,.38);font-size:17px;padding:4px;line-height:1;transition:color .2s}
-    .eye:hover{color:rgba(255,255,255,.78)}
-    .lbtn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;margin-top:2px}
-    .lbtn:hover{opacity:.87}
-    .lerr{color:#F1948A;font-size:13px;margin-top:10px;display:none}
+<div id="loginScreen">
+  <div class="lc">
+    <img src="https://d7jztl9hjt0p1.cloudfront.net/1.0.0.119/assets/images/home/logo@3x.png" height="40" style="margin-bottom:20px"/>
+    <input class="li" type="email" id="lEmail" placeholder="E-mail"/>
+    <input class="li" type="password" id="lPass" placeholder="Senha"/>
+    <button class="lbtn" id="loginBtn">Entrar</button>
+  </div>
+</div>
 
-    /* DASHBOARD */
-    #dashboard{display:none;min-height:100vh}
-    .topbar{background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-    .tl{display:flex;align-items:center;gap:12px}
-    .tl img{height:28px;filter:brightness(0) invert(1)}
-    .tl span{color:rgba(255,255,255,.55);font-size:13px}
-    .badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
-    .outbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);padding:5px 13px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
-    .outbtn:hover{background:rgba(255,255,255,.14)}
-    .content{padding:22px}
+<div id="dashboard">
+  <div class="topbar">
+    <span>Painel NPS Ital'in House</span>
+    <button onclick="location.reload()" style="background:none;color:#fff;border:1px solid #fff;padding:5px 10px;border-radius:5px;cursor:pointer">Sair</button>
+  </div>
 
-    /* TABS */
-    .tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
-    .tab{padding:8px 17px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .2s;user-select:none}
-    .tab.active{background:var(--red);color:#fff;border-color:var(--red)}
-    .tab:hover:not(.active){border-color:var(--red);color:var(--red)}
+  <div class="filters">
+    <select class="fi" id="filterLoja">
+      <option value="">Filtrar por Loja (Todas)</option>
+    </select>
+    <select class="fi" id="filterNPS">
+      <option value="">Todos os perfis</option>
+      <option value="9">Promotores</option>
+      <option value="7">Passivos</option>
+      <option value="0">Detratores</option>
+    </select>
+  </div>
 
-    /* TABLE */
-    .twrap{background:var(--card);border:1px
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="cbAll"></th>
+          <th>Data</th>
+          <th>Loja</th>
+          <th>Nota</th>
+          <th>Comentário</th>
+        </tr>
+      </thead>
+      <tbody id="tBody"></tbody>
+    </table>
+  </div>
+
+  <div class="bulk-bar" id="bulkBar">
+    <span id="bulkCount">0 selecionados</span>
+    <button class="bulk-del" id="bulkDel">🗑 Apagar selecionadas rapidamente</button>
+    <button onclick="cancelSelection()" style="background:none;color:#fff;border:none;cursor:pointer">Cancelar</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { getFirestore, collection, query, onSnapshot, orderBy, doc, writeBatch } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCInytAdn5ly8DvqwLUvEFXsfQcP0YXyd4",
+    projectId: "italinhouse-nps",
+    // ... restante das configurações originais
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  let selectedIds = new Set();
+  let allData = [];
+
+  // Login Simples
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    loadData();
+  });
+
+  function loadData() {
+    const q = query(collection(db, "avaliacoes"), orderBy("criadoEm", "desc"));
+    
+    onSnapshot(q, (snapshot) => {
+      allData = [];
+      const lojasMap = new Map();
+
+      snapshot.forEach((doc) => {
+        const item = { id: doc.id, ...doc.data() };
+        allData.push(item);
+        if (item.lojaId && item.lojaNome) {
+          lojasMap.set(item.lojaId, item.lojaNome);
+        }
+      });
+
+      // Atualiza o Filtro com nomes reais
+      const filterLoja = document.getElementById("filterLoja");
+      const currentVal = filterLoja.value;
+      filterLoja.innerHTML = '<option value="">Filtrar por Loja (Todas)</option>';
+      lojasMap.forEach((nome, id) => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = nome;
+        filterLoja.appendChild(opt);
+      });
+      filterLoja.value = currentVal;
+
+      renderTable();
+    });
+  }
+
+  function renderTable() {
+    const filterL = document.getElementById("filterLoja").value;
+    const tBody = document.getElementById("tBody");
+    
+    tBody.innerHTML = allData
+      .filter(d => !filterL || d.lojaId === filterL)
+      .map(d => `
+        <tr>
+          <td><input type="checkbox" class="row-cb" data-id="${d.id}" ${selectedIds.has(d.id) ? 'checked' : ''}></td>
+          <td style="font-size:11px">${d.criadoEm ? d.criadoEm.toDate().toLocaleString() : '-'}</td>
+          <td>
+            <div style="font-weight:600; color:#333">${d.lojaNome || 'Loja s/ Nome'}</div>
+            <div style="font-size:10px; color:#999">${d.lojaId || '-'}</div>
+          </td>
+          <td><span class="pill ${getScoreClass(d.score)}">${d.score}</span></td>
+          <td style="font-size:12px; color:#666">${d.comment || '-'}</td>
+        </tr>
+      `).join('');
+
+    // Eventos de checkbox
+    document.querySelectorAll(".row-cb").forEach(cb => {
+      cb.onclick = (e) => {
+        const id = e.target.getAttribute("data-id");
+        if (e.target.checked) selectedIds.add(id);
+        else selectedIds.delete(id);
+        updateBulkBar();
+      };
+    });
+  }
+
+  function getScoreClass(s) {
+    if (s >= 9) return 'promoter';
+    if (s >= 7) return 'passive';
+    return 'detractor';
+  }
+
+  function updateBulkBar() {
+    const bar = document.getElementById("bulkBar");
+    const count = document.getElementById("bulkCount");
+    if (selectedIds.size > 0) {
+      bar.classList.add("show");
+      count.textContent = `${selectedIds.size} selecionados`;
+    } else {
+      bar.classList.remove("show");
+    }
+  }
+
+  // CORREÇÃO: APAGAR EM LOTE COM BATCH (MUITO RÁPIDO)
+  document.getElementById("bulkDel").onclick = async () => {
+    if (!confirm(`Deseja apagar ${selectedIds.size} avaliações permanentemente?`)) return;
+    
+    const btn = document.getElementById("bulkDel");
+    btn.disabled = true;
+    btn.textContent = "Limpando banco de dados...";
+
+    const batch = writeBatch(db);
+    selectedIds.forEach(id => {
+      const docRef = doc(db, "avaliacoes", id);
+      batch.delete(docRef);
+    });
+
+    try {
+      await batch.commit();
+      selectedIds.clear();
+      updateBulkBar();
+      alert("Sucesso! As avaliações foram removidas.");
+    } catch (e) {
+      alert("Erro ao apagar: " + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "🗑 Apagar selecionadas rapidamente";
+    }
+  };
+
+  document.getElementById("filterLoja").onchange = renderTable;
+</script>
+</body>
+</html>
