@@ -134,17 +134,6 @@
     .delbtn{background:none;border:1px solid #F5C6C0;color:#922B21;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
     .delbtn:hover{background:#FDEDEC}
 
-    /* SELEÇÃO EM LOTE */
-    .cb-wrap{display:flex;align-items:center;justify-content:center}
-    input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--red)}
-    .bulk-bar{display:none;position:sticky;bottom:16px;left:0;right:0;margin:12px 0 0;background:var(--dark);border-radius:12px;padding:12px 20px;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.35);z-index:50}
-    .bulk-bar.show{display:flex}
-    .bulk-info{color:#fff;font-size:13px;font-weight:500;flex:1}
-    .bulk-info span{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:6px}
-    .bulk-del{padding:8px 18px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
-    .bulk-del:hover{opacity:.85}
-    .bulk-cancel{padding:8px 14px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:none;border-radius:8px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
-    .bulk-cancel:hover{opacity:.8}
     @media(max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.rgrid{grid-template-columns:1fr}}
     @media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.content{padding:12px}}
   </style>
@@ -232,7 +221,6 @@
         <div class="loading" id="tLoading">Carregando avaliações...</div>
         <table id="avalTable" style="display:none">
           <thead><tr>
-            <th style="width:36px"><div class="cb-wrap"><input type="checkbox" id="cbAll" title="Selecionar todos"/></div></th>
             <th data-col="criadoEm">Data ↕</th>
             <th data-col="lojaNome">Loja ↕</th>
             <th data-col="score">Nota ↕</th>
@@ -241,12 +229,6 @@
           <tbody id="tBody"></tbody>
         </table>
         <div class="empty" id="tEmpty" style="display:none">Nenhuma avaliação encontrada.</div>
-      </div>
-      <!-- BARRA AÇÃO EM MASSA -->
-      <div class="bulk-bar" id="bulkBar">
-        <div class="bulk-info"><span id="bulkCount">0</span> avaliação(ões) selecionada(s)</div>
-        <button class="bulk-cancel" id="bulkCancel">✕ Cancelar</button>
-        <button class="bulk-del" id="bulkDel">🗑 Apagar selecionadas</button>
       </div>
     </div>
 
@@ -426,8 +408,6 @@ var filteredData = [];
 var sortCol = "criadoEm";
 var sortAsc = false;
 var selectedLoja = null;
-var selectedIds = new Set();
-var docIdMap = {};
 
 // ══════════════════════════════════════════════════════
 // UTILITÁRIOS
@@ -528,45 +508,13 @@ function renderAval() {
   document.getElementById("avalTable").style.display="table";
   document.getElementById("tEmpty").style.display="none";
   var html="";
-  docIdMap = {};
   data.forEach(function(d){
-    docIdMap[d.id] = d;
     var type=d.score>=9?"promoter":d.score>=7?"passive":"detractor";
     var lbl=d.score>=9?"Promotor":d.score>=7?"Passivo":"Detrator";
     var cl=classif(d.comment);
-    var checked=selectedIds.has(d.id)?"checked":"";
-    html+="<tr data-id='"+d.id+"'><td><div class='cb-wrap'><input type='checkbox' class='row-cb' data-id='"+d.id+"' "+checked+"/></div></td><td style='color:var(--muted);font-size:12px'>"+fmtDate(d.criadoEm)+"</td><td><strong>"+(d.lojaNome||d.lojaId||"—")+"</strong></td><td><span class='pill "+type+"'>"+d.score+"</span></td><td><span class='ntag "+type+"'>"+lbl+"</span></td><td>"+classifBadge(cl)+"</td><td><div class='comment-c' title='"+(d.comment||"")+"'>"+(d.comment||"<span style='opacity:.4'>sem comentário</span>")+"</div></td></tr>";
+    html+="<tr><td style='color:var(--muted);font-size:12px'>"+fmtDate(d.criadoEm)+"</td><td><strong>"+(d.lojaNome||d.lojaId||"—")+"</strong></td><td><span class='pill "+type+"'>"+d.score+"</span></td><td><span class='ntag "+type+"'>"+lbl+"</span></td><td>"+classifBadge(cl)+"</td><td><div class='comment-c' title='"+(d.comment||"")+"'>"+(d.comment||"<span style='opacity:.4'>sem comentário</span>")+"</div></td></tr>";
   });
   document.getElementById("tBody").innerHTML=html;
-  // Eventos dos checkboxes
-  document.querySelectorAll(".row-cb").forEach(function(cb){
-    cb.addEventListener("change",function(){
-      if(cb.checked) selectedIds.add(cb.getAttribute("data-id"));
-      else selectedIds.delete(cb.getAttribute("data-id"));
-      updateBulkBar();
-    });
-    cb.addEventListener("click",function(e){e.stopPropagation();});
-  });
-  // Selecionar/deselecionar ao clicar na linha
-  document.querySelectorAll("#tBody tr").forEach(function(tr){
-    tr.addEventListener("click",function(e){
-      if(e.target.type==="checkbox") return;
-      var cb=tr.querySelector(".row-cb");
-      if(!cb) return;
-      cb.checked=!cb.checked;
-      if(cb.checked) selectedIds.add(cb.getAttribute("data-id"));
-      else selectedIds.delete(cb.getAttribute("data-id"));
-      updateBulkBar();
-    });
-    tr.style.cursor="pointer";
-  });
-  // Checkbox "selecionar todos"
-  var cbAll=document.getElementById("cbAll");
-  if(cbAll){
-    cbAll.checked=false;
-    cbAll.indeterminate=selectedIds.size>0&&selectedIds.size<data.length;
-    cbAll.checked=selectedIds.size>0&&selectedIds.size===data.length;
-  }
 }
 
 // ══════════════════════════════════════════════════════
@@ -891,9 +839,6 @@ function loadFirebase() {
 
     var db=getFirestore(initializeApp(FIREBASE_CONFIG));
 
-    // Setup ações em massa
-    setupBulkActions();
-
     // onSnapshot em tempo real - atualiza sempre que houver mudança
     onSnapshot(
       query(collection(db,"avaliacoes"), orderBy("criadoEm","desc")),
@@ -915,72 +860,6 @@ function loadFirebase() {
   }).catch(function(e){
     console.error("Erro ao carregar Firebase:",e);
     document.getElementById("tLoading").textContent="Erro ao carregar Firebase.";
-  });
-}
-
-// ══════════════════════════════════════════════════════
-// AÇÃO EM MASSA
-// ══════════════════════════════════════════════════════
-function updateBulkBar() {
-  var bar=document.getElementById("bulkBar");
-  var cnt=document.getElementById("bulkCount");
-  if(selectedIds.size>0){
-    bar.classList.add("show");
-    cnt.textContent=selectedIds.size;
-  } else {
-    bar.classList.remove("show");
-  }
-  // Atualizar checkbox "todos"
-  var cbAll=document.getElementById("cbAll");
-  if(cbAll){
-    var visible=document.querySelectorAll(".row-cb").length;
-    cbAll.indeterminate=selectedIds.size>0&&selectedIds.size<visible;
-    cbAll.checked=visible>0&&selectedIds.size===visible;
-  }
-}
-
-function setupBulkActions() {
-  // Selecionar todos
-  document.getElementById("cbAll").addEventListener("change",function(){
-    var cbs=document.querySelectorAll(".row-cb");
-    cbs.forEach(function(cb){
-      cb.checked=document.getElementById("cbAll").checked;
-      if(cb.checked) selectedIds.add(cb.getAttribute("data-id"));
-      else selectedIds.delete(cb.getAttribute("data-id"));
-    });
-    updateBulkBar();
-  });
-  // Cancelar seleção
-  document.getElementById("bulkCancel").addEventListener("click",function(){
-    selectedIds.clear();
-    document.querySelectorAll(".row-cb").forEach(function(cb){cb.checked=false;});
-    var cbAll=document.getElementById("cbAll");
-    if(cbAll){cbAll.checked=false;cbAll.indeterminate=false;}
-    updateBulkBar();
-  });
-  // Apagar selecionadas
-  document.getElementById("bulkDel").addEventListener("click",function(){
-    var n=selectedIds.size;
-    if(!n) return;
-    if(!confirm("Apagar "+n+" avaliação"+(n!==1?"ões":"")+"? Esta ação não pode ser desfeita.")) return;
-    var btn=document.getElementById("bulkDel");
-    btn.disabled=true;
-    btn.textContent="Apagando...";
-    var ids=Array.from(selectedIds);
-    var promises=ids.map(function(id){
-      return window._fbDeleteDoc(window._fbDoc(window._fbDb, "avaliacoes", id));
-    });
-    Promise.all(promises).then(function(){
-      selectedIds.clear();
-      btn.disabled=false;
-      btn.textContent="🗑 Apagar selecionadas";
-      document.getElementById("bulkBar").classList.remove("show");
-    }).catch(function(e){
-      console.error(e);
-      btn.disabled=false;
-      btn.textContent="🗑 Apagar selecionadas";
-      alert("Erro ao apagar: "+e.message);
-    });
   });
 }
 
